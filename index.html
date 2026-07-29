@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description"
+        content="TripWise helps you discover destinations, explore places, check travel conditions, and plan your next unforgettable trip." />
+
+    <meta name="author" content="Brinley Francis" />
+
+    <title>TripWise – Your All-in One Smart Travel Planner</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+
+    <script type="module" src="./scripts/main.js"></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="logo" href="./index.html" aria-label="TripWise home">
+            <span class="logo-mark" aria-hidden="true">✈</span>
+            <span>TripWise</span>
+        </a>
+
+        <button class="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false"
+            aria-controls="site-navigation">
+            ☰
+        </button>
+
+        <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
+            <a href="./index.html" class="active">Home</a>
+            <a href="./planner.html">Plan a Trip</a>
+            <a href="./destination.html">Destinations</a>
+            <a href="./favourites.html">Favourites</a>
+            <a href="./about.html">About</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <p class="eyebrow">YOUR NEXT ADVENTURE STARTS HERE</p>
+
+                <h1 id="hero-title">
+                    Stop dreaming about the trip.
+                    <span>Start planning it.</span>
+                </h1>
+
+                <p class="hero-text">
+                    Discover places worth going, find things worth doing, and build
+                    a trip that actually feels like you.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="./planner.html">
+                        Plan My Trip
+                    </a>
+
+                    <a class="button button-secondary" href="./destination.html">
+                        Explore Destinations
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-section" aria-labelledby="featured-title">
+            <div class="section-heading">
+                <p class="eyebrow">GO SOMEWHERE NEW</p>
+                <h2 id="featured-title">Where will you go next?</h2>
+                <p>
+                    Get inspired by destinations and discover the details that can
+                    help turn “maybe someday” into an actual plan.
+                </p>
+            </div>
+
+            <div id="featured-destinations" class="destination-grid">
+                <!-- Destination cards will be generated dynamically with JavaScript. -->
+            </div>
+        </section>
+
+        <section class="features-section" aria-labelledby="features-title">
+            <div class="section-heading">
+                <p class="eyebrow">TRAVEL, WITHOUT THE CHAOS</p>
+                <h2 id="features-title">Everything you need to plan smarter.</h2>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🌍</div>
+                    <h3>Discover</h3>
+                    <p>
+                        Find destinations and places that match the kind of experience
+                        you actually want.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🧭</div>
+                    <h3>Plan</h3>
+                    <p>
+                        Bring your ideas together and turn scattered travel plans into
+                        something you can actually follow.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">☀️</div>
+                    <h3>Check</h3>
+                    <p>
+                        Get useful destination information, including current weather
+                        conditions, before you make your move.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">♡</div>
+                    <h3>Save</h3>
+                    <p>
+                        Keep your favourite destinations close so the places you love
+                        don't get lost in another browser tab.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="cta-section" aria-labelledby="cta-title">
+            <div class="cta-content">
+                <p class="eyebrow">READY WHEN YOU ARE</p>
+
+                <h2 id="cta-title">Your next great trip could start right here.</h2>
+
+                <p>
+                    Pick a destination, explore what it offers, and start building
+                    something worth looking forward to.
+                </p>
+
+                <a class="button button-primary" href="./planner.html">
+                    Start Planning
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>
+                <a class="logo" href="./index.html" aria-label="TripWise home">
+                    <span class="logo-mark" aria-hidden="true">✈</span>
+                    <span>TripWise</span>
+                </a>
+
+                <p>
+                    Plan better. Travel smarter. Make the journey count.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="./planner.html">Plan a Trip</a>
+                <a href="./destination.html">Destinations</a>
+                <a href="./favourites.html">Favourites</a>
+                <a href="./about.html">About</a>
+            </div>
+        </div>
+
+        <p class="copyright">
+            &copy; <span id="current-year"></span> TripWise. All rights reserved.
+        </p>
+    </footer>
+</body>
+
+</html>
