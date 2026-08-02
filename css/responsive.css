@@ -95,13 +95,18 @@
         display: none;
     }
 
+    .site-navigation {
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+    }
+
 
     /* HERO */
 
     .hero {
-        min-height: 650px;
-        padding: 80px 20px;
-        align-items: center;
+        min-height: auto;
+        padding: 60px 20px 40px;
+        align-items: flex-start;
         justify-content: center;
     }
 
@@ -125,7 +130,7 @@
         background: transparent;
         backdrop-filter: none;
         font-size: clamp(2.4rem, 12vw, 3.5rem);
-        line-height: 1.02;
+        line-height: 1.1;
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -148,10 +153,6 @@
     }
 
     .hero-actions .button {
-        width: auto;
-    }
-
-    .hero-actions .button {
         width: 100%;
     }
 
@@ -160,7 +161,7 @@
     .search-section,
     .featured-section,
     .features-section {
-        padding: 70px 20px;
+        padding: 60px 20px;
     }
 
     .section-heading {
@@ -196,8 +197,13 @@
         height: 300px;
     }
 
+    .destination-card,
     .feature-card {
-        padding: 26px 22px;
+        width: 100%;
+    }
+
+    .feature-card {
+        padding: 24px 18px;
     }
 
 
@@ -209,6 +215,36 @@
 
     .cta-section h2 {
         font-size: clamp(2.4rem, 10vw, 3.5rem);
+    }
+
+    /* DESTINATION PAGE */
+
+    .destination-details-section {
+        padding: 40px 20px 60px;
+    }
+
+    .destination-hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px;
+    }
+
+    .destination-hero-content {
+        width: 100%;
+    }
+
+    .destination-hero-content h2 {
+        font-size: clamp(2rem, 7vw, 2.6rem);
+    }
+
+    .country-facts-grid,
+    .places-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .country-fact-card,
+    .destination-placeholder-card {
+        padding: 20px;
     }
 
 
