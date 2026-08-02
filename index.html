@@ -2,172 +2,323 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-        content="TripWise helps you discover destinations, explore places, check travel conditions, and plan your next unforgettable trip." />
+        content="TripWise helps you turn travel daydreams into real plans. Discover places, find things to do, check the weather, and build a trip worth looking forward to.">
 
-    <meta name="author" content="Brinley Francis" />
+    <meta name="author" content="Brinley Francis">
 
-    <title>TripWise – Your All-in One Smart Travel Planner</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/responsive.css" />
+    <title>TripWise – Your All-in-One Smart Travel Planner</title>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&family=Roboto:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/responsive.css">
     <script type="module" src="./scripts/main.js"></script>
 </head>
 
 <body>
+
     <header class="site-header">
-        <a class="logo" href="./index.html" aria-label="TripWise home">
-            <span class="logo-mark" aria-hidden="true">✈</span>
-            <span>TripWise</span>
-        </a>
+        <div class="header-container">
 
-        <button class="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false"
-            aria-controls="site-navigation">
-            ☰
-        </button>
+            <a class="logo" href="./index.html" aria-label="TripWise home">
+                <span class="logo-mark" aria-hidden="true">✈</span>
+                <span>TripWise</span>
+            </a>
 
-        <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
-            <a href="./index.html" class="active">Home</a>
-            <a href="./planner.html">Plan a Trip</a>
-            <a href="./destination.html">Destinations</a>
-            <a href="./favourites.html">Favourites</a>
-            <a href="./about.html">About</a>
-        </nav>
+            <button class="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false"
+                aria-controls="site-navigation">
+                ☰
+            </button>
+
+            <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
+                <a href="./index.html" class="active" aria-current="page">Home</a>
+                <a href="./planner.html">Plan a Trip</a>
+                <a href="./destination.html">Destinations</a>
+                <a href="./favourites.html">Favourites</a>
+                <a href="./about.html">About</a>
+            </nav>
+
+        </div>
     </header>
 
     <main>
+
+        <!-- Hero -->
         <section class="hero" aria-labelledby="hero-title">
+
+            <picture>
+                <source media="(max-width: 700px)" srcset="./images/hero-image-small.webp">
+
+                <img class="hero-image" src="./images/hero-image.webp"
+                    alt="Scenic travel destination representing a new adventure" width="1200" height="800"
+                    loading="eager" fetchpriority="high">
+            </picture>
+
+            <div class="hero-overlay"></div>
+
             <div class="hero-content">
-                <p class="eyebrow">YOUR NEXT ADVENTURE STARTS HERE</p>
+
+                <p class="eyebrow">YOU'VE THOUGHT ABOUT IT LONG ENOUGH</p>
 
                 <h1 id="hero-title">
-                    Stop dreaming about the trip.
-                    <span>Start planning it.</span>
+                    <span class="hero-title-line">Your next adventure</span>
+                    <span class="hero-title-line">isn't going to plan itself.</span>
                 </h1>
 
                 <p class="hero-text">
-                    Discover places worth going, find things worth doing, and build
-                    a trip that actually feels like you.
+                    Stop collecting travel reels, saving hotel posts, and saying
+                    “one day.” TripWise brings the pieces together so you can go
+                    from <em>“that looks amazing”</em> to <em>“when are we leaving?”</em>
                 </p>
 
                 <div class="hero-actions">
                     <a class="button button-primary" href="./planner.html">
-                        Plan My Trip
+                        Let's Plan It
                     </a>
 
                     <a class="button button-secondary" href="./destination.html">
-                        Explore Destinations
+                        Give Me Somewhere to Go
                     </a>
                 </div>
+
             </div>
+
         </section>
 
-        <section class="featured-section" aria-labelledby="featured-title">
+
+        <!-- Search -->
+        <section class="search-section" aria-labelledby="search-title">
+
             <div class="section-heading">
-                <p class="eyebrow">GO SOMEWHERE NEW</p>
-                <h2 id="featured-title">Where will you go next?</h2>
+
+                <p class="eyebrow">GOT A PLACE IN MIND?</p>
+
+                <h2 id="search-title">
+                    Say the name. We'll do the digging.
+                </h2>
+
                 <p>
-                    Get inspired by destinations and discover the details that can
-                    help turn “maybe someday” into an actual plan.
+                    City break? Beach escape? Somewhere you've never heard of?
+                    Type it in and see what starts to unfold.
                 </p>
+
             </div>
 
-            <div id="featured-destinations" class="destination-grid">
-                <!-- Destination cards will be generated dynamically with JavaScript. -->
-            </div>
+            <form id="destination-search-form" class="search-form">
+
+                <div class="form-group">
+
+                    <label for="destination-search">
+                        Where are you thinking about going?
+                    </label>
+
+                    <input type="search" id="destination-search" name="destination"
+                        placeholder="Try Kyoto, Cape Town, Paris..." autocomplete="off" required>
+
+                </div>
+
+                <button class="button button-primary" type="submit">
+                    Show Me
+                </button>
+
+            </form>
+
+            <p id="search-status" class="search-status" aria-live="polite"></p>
+
         </section>
 
-        <section class="features-section" aria-labelledby="features-title">
+
+        <!-- Featured destinations -->
+        <section class="featured-section" aria-labelledby="featured-title">
+
             <div class="section-heading">
-                <p class="eyebrow">TRAVEL, WITHOUT THE CHAOS</p>
-                <h2 id="features-title">Everything you need to plan smarter.</h2>
+
+                <p class="eyebrow">A LITTLE TRAVEL INSPIRATION</p>
+
+                <h2 id="featured-title">
+                    Places that make “maybe someday” feel a little too far away.
+                </h2>
+
+                <p>
+                    A few destinations to tempt your curiosity. Pick one,
+                    start exploring, and see where it takes you.
+                </p>
+
+            </div>
+
+            <div id="featured-destinations" class="destination-grid" aria-live="polite">
+
+                <!-- Destination cards generated by JavaScript -->
+
+            </div>
+
+        </section>
+
+
+        <!-- Features -->
+        <section class="features-section" aria-labelledby="features-title">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">TRAVEL PLANNING, WITHOUT THE HEADACHE</p>
+
+                <h2 id="features-title">
+                    Less tab-hopping. More “we're actually going.”
+                </h2>
+
+                <p>
+                    Because planning a getaway shouldn't require seventeen
+                    browser tabs, three group chats, and one person doing all
+                    the research.
+                </p>
+
             </div>
 
             <div class="feature-grid">
-                <article class="feature-card">
-                    <div class="feature-icon" aria-hidden="true">🌍</div>
-                    <h3>Discover</h3>
-                    <p>
-                        Find destinations and places that match the kind of experience
-                        you actually want.
-                    </p>
-                </article>
 
                 <article class="feature-card">
-                    <div class="feature-icon" aria-hidden="true">🧭</div>
-                    <h3>Plan</h3>
+
+                    <div class="feature-icon" aria-hidden="true">
+                        🌍
+                    </div>
+
+                    <h3>Find somewhere worth leaving home for.</h3>
+
                     <p>
-                        Bring your ideas together and turn scattered travel plans into
-                        something you can actually follow.
+                        Explore destinations and uncover places that fit the
+                        kind of trip you're craving — not just whatever happens
+                        to be trending today.
                     </p>
+
                 </article>
 
-                <article class="feature-card">
-                    <div class="feature-icon" aria-hidden="true">☀️</div>
-                    <h3>Check</h3>
-                    <p>
-                        Get useful destination information, including current weather
-                        conditions, before you make your move.
-                    </p>
-                </article>
 
                 <article class="feature-card">
-                    <div class="feature-icon" aria-hidden="true">♡</div>
-                    <h3>Save</h3>
+
+                    <div class="feature-icon" aria-hidden="true">
+                        🧭
+                    </div>
+
+                    <h3>Turn “we should go” into an actual plan.</h3>
+
                     <p>
-                        Keep your favourite destinations close so the places you love
-                        don't get lost in another browser tab.
+                        Gather the places you want to see, organise your ideas,
+                        and give that half-serious group-chat plan a fighting chance.
                     </p>
+
                 </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon" aria-hidden="true">
+                        ☀️
+                    </div>
+
+                    <h3>Know what you're walking into.</h3>
+
+                    <p>
+                        Check the weather before you pack sandals for a forecast
+                        that clearly had other plans.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon" aria-hidden="true">
+                        ♡
+                    </div>
+
+                    <h3>Keep the places you can't stop thinking about.</h3>
+
+                    <p>
+                        Save destinations that caught your eye so your next
+                        “where should we go?” conversation has somewhere to begin.
+                    </p>
+
+                </article>
+
             </div>
+
         </section>
 
-        <section class="cta-section" aria-labelledby="cta-title">
-            <div class="cta-content">
-                <p class="eyebrow">READY WHEN YOU ARE</p>
 
-                <h2 id="cta-title">Your next great trip could start right here.</h2>
+        <!-- CTA -->
+        <section class="cta-section" aria-labelledby="cta-title">
+
+            <div class="cta-content">
+
+                <p class="eyebrow">YOUR SIGN TO STOP SAYING “ONE DAY”</p>
+
+                <h2 id="cta-title">
+                    You already know you want to go.
+                    Now let's figure out how.
+                </h2>
 
                 <p>
-                    Pick a destination, explore what it offers, and start building
-                    something worth looking forward to.
+                    Choose a place. Chase the curiosity. Build the plan.
+                    Give yourself something better to look forward to.
                 </p>
 
                 <a class="button button-primary" href="./planner.html">
-                    Start Planning
+                    Start My Trip
                 </a>
+
             </div>
+
         </section>
+
     </main>
 
+
     <footer class="site-footer">
+
         <div class="footer-content">
+
             <div>
+
                 <a class="logo" href="./index.html" aria-label="TripWise home">
                     <span class="logo-mark" aria-hidden="true">✈</span>
                     <span>TripWise</span>
                 </a>
 
                 <p>
-                    Plan better. Travel smarter. Make the journey count.
+                    Less planning chaos. More stories worth telling.
                 </p>
+
             </div>
 
+
             <div class="footer-links">
+
                 <a href="./planner.html">Plan a Trip</a>
                 <a href="./destination.html">Destinations</a>
                 <a href="./favourites.html">Favourites</a>
                 <a href="./about.html">About</a>
+
             </div>
+
         </div>
 
+
         <p class="copyright">
-            &copy; <span id="current-year"></span> TripWise. All rights reserved.
+            &copy; <span id="current-year"></span>
+            TripWise. All rights reserved.
         </p>
+
     </footer>
+
 </body>
 
 </html>
