@@ -16,12 +16,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&family=Roboto:wght@400;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Roboto:wght@400;700;800&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/responsive.css">
-    <script type="module" src="./scripts/main.js"></script>
+    <script type="module" src="./scripts/main.js" defer></script>
 </head>
 
 <body>
@@ -59,8 +59,10 @@
                 <source media="(max-width: 700px)" srcset="./images/hero-image-small.webp">
 
                 <img class="hero-image" src="./images/hero-image.webp"
+                    srcset="./images/hero-image-small.webp 700w, ./images/hero-image.webp 1200w"
+                    sizes="(max-width: 700px) 100vw, 1200px"
                     alt="Scenic travel destination representing a new adventure" width="1200" height="800"
-                    loading="eager" fetchpriority="high">
+                    loading="eager" fetchpriority="high" decoding="async">
             </picture>
 
             <div class="hero-overlay"></div>

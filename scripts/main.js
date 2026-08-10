@@ -1,9 +1,23 @@
+
+
 const COUNTRIES_API_URL = "https://countries.dev";
 
 const FEATURED_COUNTRIES = [
-    "Japan",
-    "South Africa",
-    "France"
+    {
+        name: "Japan",
+        capital: "Tokyo",
+        region: "Asia"
+    },
+    {
+        name: "South Africa",
+        capital: "Pretoria",
+        region: "Africa"
+    },
+    {
+        name: "France",
+        capital: "Paris",
+        region: "Europe"
+    }
 ];
 
 const COUNTRY_IMAGES = {
@@ -17,12 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMobileMenu();
     setupDestinationSearch();
 
-    if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadFeaturedDestinations);
-    } else {
-        setTimeout(loadFeaturedDestinations, 100);
-    }
+    // Load featured destinations after the main page has painted and the browser is idle.
+    window.addEventListener("load", () => {
+        if ("requestIdleCallback" in window) {
+            window.requestIdleCallback(() => loadFeaturedDestinations(), { timeout: 2000 });
+        } else {
+            window.setTimeout(loadFeaturedDestinations, 1200);
+        }
+    });
 });
+
 
 function updateCurrentYear() {
     const yearElement = document.querySelector("#current-year");
@@ -31,6 +49,7 @@ function updateCurrentYear() {
         yearElement.textContent = new Date().getFullYear();
     }
 }
+
 
 function setupMobileMenu() {
     const menuButton = document.querySelector(".menu-button");
@@ -46,6 +65,7 @@ function setupMobileMenu() {
         menuButton.setAttribute("aria-expanded", isOpen);
     });
 }
+
 
 async function fetchCountry(countryName) {
     const url =
@@ -66,39 +86,45 @@ async function fetchCountry(countryName) {
     return countries[0];
 }
 
-async function loadFeaturedDestinations() {
-    const container = document.querySelector("#featured-destinations");
+async function fetchCity(cityName) {
+    const url =
+        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q=${encodeURIComponent(cityName)}`;
 
-    if (!container) {
-        return;
+    const response = await fetch(url, {
+        headers: {
+            Accept: "application/json"
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`City request failed: ${response.status}`);
     }
 
-    try {
-        const countries = await Promise.all(
-            FEATURED_COUNTRIES.map(fetchCountry)
-        );
+    const results = await response.json();
 
-        container.innerHTML = countries
-            .map(createDestinationCard)
-            .join("");
-    } catch (error) {
-        console.error("Featured destinations error:", error);
-
-        container.innerHTML = `
-            <p class="search-status">
-                We couldn't load the destinations right now. Please try again.
-            </p>
-        `;
+    if (!Array.isArray(results) || results.length === 0) {
+        throw new Error("City not found.");
     }
+
+    const result = results[0];
+    const address = result.address || {};
+
+    return {
+        name:
+            address.city ||
+            address.town ||
+            address.municipality ||
+            address.village ||
+            result.name ||
+            cityName,
+        country: address.country || ""
+    };
 }
+
 
 function createDestinationCard(country) {
     const name = country.name || "Unknown destination";
-
-    const capital = Array.isArray(country.capital)
-        ? country.capital[0] || "Capital unavailable"
-        : country.capital || "Capital unavailable";
-
+    const capital = country.capital || "Capital unavailable";
     const region = country.region || "Region unavailable";
     const image = COUNTRY_IMAGES[name] || "";
 
@@ -110,6 +136,7 @@ function createDestinationCard(country) {
                 src="${image}"
                 alt="Scenic view of ${name}"
                 loading="lazy"
+                decoding="async"
                 width="400"
                 height="300">
 
@@ -134,6 +161,38 @@ function createDestinationCard(country) {
         </article>
     `;
 }
+
+
+async function loadFeaturedDestinations() {
+    const container = document.querySelector("#featured-destinations");
+
+    if (!container) {
+        return;
+    }
+
+    const cards = await Promise.all(
+        FEATURED_COUNTRIES.map(async (country) => {
+            try {
+                const countryDetails = await fetchCountry(country.name);
+
+                return createDestinationCard({
+                    ...country,
+                    ...countryDetails
+                });
+            } catch (error) {
+                console.warn(
+                    "Featured destination lookup failed:",
+                    error
+                );
+
+                return createDestinationCard(country);
+            }
+        })
+    );
+
+    container.innerHTML = cards.join("");
+}
+
 
 function setupDestinationSearch() {
     const form = document.querySelector("#destination-search-form");
@@ -168,11 +227,44 @@ function setupDestinationSearch() {
                     Explore ${countryName}
                 </a>
             `;
-        } catch (error) {
-            console.error("Destination search error:", error);
 
-            status.textContent =
-                "We couldn't find that country. Try a country name such as Japan or France.";
+        } catch (countryError) {
+
+            // If it isn't a country, try searching for a city.
+            try {
+                const city = await fetchCity(searchTerm);
+
+                const cityName =
+                    city.name ||
+                    city.city ||
+                    searchTerm;
+
+                const countryName =
+                    city.country ||
+                    city.countryName ||
+                    "";
+
+                const destinationCountry =
+                    countryName || cityName;
+
+                status.innerHTML = `
+                    Found it. Let's see what ${cityName} has waiting for you.
+                    <a href="./destination.html?country=${encodeURIComponent(destinationCountry)}">
+                        Explore ${cityName}
+                    </a>
+                `;
+
+            } catch (cityError) {
+
+                console.error(
+                    "Destination search error:",
+                    cityError
+                );
+
+                status.textContent =
+
+                    "We couldn't find that country. Try a country or city name such as Japan or France,Paris,Tokyo.";
+            }
         }
     });
 }

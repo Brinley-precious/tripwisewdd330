@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favourites | TripWise</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&family=Roboto:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="module" src="./scripts/favourites.js" defer></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a class="logo" href="./index.html" aria-label="TripWise home">
+                <span class="logo-mark" aria-hidden="true">✈</span>
+                <span>TripWise</span>
+            </a>
+
+            <button class="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false"
+                aria-controls="site-navigation">
+                ☰
+            </button>
+
+            <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
+                <a href="./index.html">Home</a>
+                <a href="./planner.html">Plan a Trip</a>
+                <a href="./destination.html">Destinations</a>
+                <a href="./favourites.html" class="active" aria-current="page">Favourites</a>
+                <a href="./about.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="favourites-intro" aria-labelledby="favourites-title">
+            <div class="section-heading">
+                <p class="eyebrow">PLACES TO REMEMBER</p>
+
+                <h1 id="favourites-title">
+                    Your favourite destinations.
+                </h1>
+
+                <p>
+                    Keep the places that caught your attention close by.
+                    When you're ready, turn one of them into your next trip.
+                </p>
+            </div>
+        </section>
+
+        <section class="favourites-section" aria-labelledby="saved-destinations-title">
+            <div class="section-heading">
+                <p class="eyebrow">SAVED BY YOU</p>
+
+                <h2 id="saved-destinations-title">
+                    Places worth coming back to
+                </h2>
+            </div>
+
+            <div id="favourites-container" class="favourites-container">
+                <p>Your saved destinations will appear here.</p>
+            </div>
+        </section>
+
+        <section id="saved-itineraries" class="saved-itineraries-section" aria-labelledby="saved-itineraries-title">
+            <div class="section-heading">
+                <p class="eyebrow">YOUR TRIPS</p>
+
+                <h2 id="saved-itineraries-title">
+                    Saved itineraries
+                </h2>
+
+                <p>
+                    Keep your finished travel plans here so you can
+                    see every day, activity, attraction, and note you've planned.
+                </p>
+            </div>
+
+            <div id="saved-itineraries-container" class="saved-itineraries-container">
+                <p>Your saved itineraries will appear here.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>
+                <a class="logo" href="./index.html" aria-label="TripWise home">
+                    <span class="logo-mark" aria-hidden="true">✈</span>
+                    <span>TripWise</span>
+                </a>
+
+                <p>
+                    Less planning chaos. More stories worth telling.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="./planner.html">Plan a Trip</a>
+                <a href="./destination.html">Destinations</a>
+                <a href="./favourites.html">Favourites</a>
+                <a href="./about.html">About</a>
+            </div>
+        </div>
+
+        <p class="copyright">
+            &copy;
+            <span id="current-year"></span>
+            TripWise. All rights reserved.
+        </p>
+    </footer>
+</body>
+
+</html>

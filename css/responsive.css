@@ -260,3 +260,226 @@
         gap: 12px 22px;
     }
 }
+
+/* =========================================
+   PLANNER RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    .planner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .planner-summary-card {
+        height: auto;
+    }
+
+    .itinerary-item-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .itinerary-item-grid .form-group:nth-child(2) {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .planner-date-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .planner-form-card,
+    .planner-summary-card {
+        padding: 24px;
+    }
+
+    .itinerary-day {
+        padding: 18px;
+    }
+
+    .itinerary-item {
+        padding: 16px;
+    }
+
+    .itinerary-item-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .itinerary-item-grid .form-group:nth-child(2) {
+        grid-column: auto;
+    }
+
+    .saved-trip-card {
+        grid-template-columns: 1fr;
+    }
+
+    .saved-trip-details {
+        grid-template-columns: 1fr;
+    }
+
+    .saved-trip-actions {
+        width: 100%;
+    }
+    .saved-trip-actions .button {
+        width: 100%;
+    }
+
+}
+
+/* =========================================
+   FAVOURITES RESPONSIVE
+   ========================================= */
+
+   @media (max-width: 900px) {
+
+       .saved-itinerary-card {
+           grid-template-columns: 1fr;
+           gap: 24px;
+       }
+
+       .saved-itinerary-actions {
+           flex-direction: row;
+       }
+
+   }
+
+
+   @media (max-width: 768px) {
+
+       .saved-itinerary-card {
+           padding: 24px;
+       }
+
+       .saved-itinerary-details {
+           grid-template-columns: 1fr;
+           gap: 18px;
+       }
+
+       .saved-itinerary-actions {
+           flex-direction: column;
+       }
+
+   }
+
+   /* =========================================
+   FAVOURITES RESPONSIVE LAYOUT
+========================================= */
+
+   @media (max-width: 900px) {
+       .favourites-container {
+           grid-template-columns: repeat(2, minmax(0, 1fr));
+       }
+
+       .saved-itinerary-detail-card {
+           grid-template-columns:
+               240px minmax(0, 1fr);
+       }
+
+       .saved-itinerary-header {
+           grid-column: 1;
+           grid-row: 1 / -1;
+       }
+
+       .saved-itinerary-days {
+           grid-column: 2;
+           grid-row: 1 / -1;
+       }
+
+       .saved-itinerary-notes {
+           display: none;
+       }
+
+       .saved-itinerary-footer {
+           display: none;
+       }
+   }
+
+   @media (max-width: 768px) {
+       .favourites-intro {
+           padding: 58px 18px 36px;
+       }
+
+       .favourites-section,
+       .saved-itineraries-section {
+           padding-right: 18px;
+           padding-left: 18px;
+       }
+
+       .favourites-container {
+           grid-template-columns: 1fr;
+       }
+
+       .favourite-card-actions {
+           grid-template-columns: 1fr;
+       }
+
+       .saved-itinerary-detail-card {
+           display: block;
+           border-radius: 16px;
+       }
+
+       .saved-itinerary-header {
+           min-height: 210px;
+           padding: 26px 22px;
+       }
+
+       .saved-itinerary-days {
+           padding: 28px 20px;
+       }
+
+       .saved-itinerary-days::before {
+           left: 40px;
+       }
+
+       .saved-itinerary-day {
+           padding-left: 54px;
+       }
+
+       .saved-itinerary-item {
+           grid-template-columns: 1fr;
+           gap: 8px;
+       }
+
+       .saved-itinerary-item-time {
+           width: fit-content;
+           min-width: 105px;
+       }
+
+       .saved-itinerary-notes {
+           display: block;
+           margin: 0 20px 20px;
+       }
+
+       .saved-itinerary-footer {
+           display: flex;
+           margin: 0 20px 20px;
+       }
+
+       .saved-itinerary-footer>span {
+           text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .favourites-container {
+        grid-template-columns: 1fr;
+    }
+
+    .favourite-card {
+        grid-template-columns: 1fr;
+    }
+
+    .favourite-card-flag {
+        min-height: 190px;
+    }
+
+    .favourite-card-content {
+        padding: 24px;
+    }
+
+}

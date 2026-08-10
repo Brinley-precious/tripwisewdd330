@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Plan your next adventure with TripWise. Organise your destination, dates, activities, and travel notes in one place.">
+
+    <meta name="author" content="Brinley Francis">
+
+    <title>Plan a Trip | TripWise</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&family=Roboto:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/planner.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <script type="module" src="./scripts/planner.js" defer></script>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+
+            <a class="logo" href="./index.html" aria-label="TripWise home">
+                <span class="logo-mark" aria-hidden="true">✈</span>
+                <span>TripWise</span>
+            </a>
+
+            <button class="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false"
+                aria-controls="site-navigation">
+                ☰
+            </button>
+
+            <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">
+                <a href="./index.html">Home</a>
+                <a href="./planner.html" class="active" aria-current="page">Plan a Trip</a>
+                <a href="./destination.html">Destinations</a>
+                <a href="./favourites.html">Favourites</a>
+                <a href="./about.html">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="planner-intro" aria-labelledby="planner-title">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">MAKE IT REAL</p>
+
+                <h1 id="planner-title">
+                    From “we should go” to “it's booked.”
+                </h1>
+
+                <p>
+                    Pick a destination, choose your dates, and start putting
+                    together a trip you can actually look forward to.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="planner-section" aria-labelledby="trip-form-title">
+
+            <div class="planner-layout">
+
+                <div class="planner-form-card">
+
+                    <div class="section-heading">
+                        <p class="eyebrow">YOUR TRIP</p>
+
+                        <h2 id="trip-form-title">
+                            Start planning
+                        </h2>
+
+                        <p>
+                            You don't need every detail figured out yet.
+                            Start with what you know.
+                        </p>
+                    </div>
+
+
+                    <form id="trip-form">
+                    
+                        <div class="form-group">
+                    
+                            <label for="trip-destination">
+                                Where are you going?
+                            </label>
+                    
+                            <input type="text" id="trip-destination" name="destination" placeholder="Try Paris, Japan, Cape Town..."
+                                autocomplete="off" required>
+                    
+                        </div>
+                    
+                    
+                        <div class="planner-date-grid">
+                    
+                            <div class="form-group">
+                    
+                                <label for="trip-start">
+                                    Start date
+                                </label>
+                    
+                                <input type="date" id="trip-start" name="startDate" required>
+                    
+                            </div>
+                    
+                    
+                            <div class="form-group">
+                    
+                                <label for="trip-end">
+                                    End date
+                                </label>
+                    
+                                <input type="date" id="trip-end" name="endDate" required>
+                    
+                            </div>
+                    
+                        </div>
+                    
+                    
+                        <div class="form-group">
+                    
+                            <label for="trip-notes">
+                                Trip notes
+                            </label>
+                    
+                            <textarea id="trip-notes" name="notes" rows="4" placeholder="Anything you don't want to forget?"></textarea>
+                    
+                        </div>
+                    
+                    
+                        <div class="itinerary-builder"
+                         id="itinerary-builder">
+                    
+                            <div class="itinerary-builder-heading">
+                    
+                                <div>
+                    
+                                    <p class="eyebrow">
+                                        YOUR ITINERARY
+                                    </p>
+                    
+                                    <h3>
+                                        Build your trip day by day
+                                    </h3>
+                    
+                                    <p>
+                                        Choose your dates first. Then add attractions,
+                                        activities, meals, and other plans to each day.
+                                    </p>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                    
+                            <div id="itinerary-container" class="itinerary-container">
+                    
+                                <p class="itinerary-empty">
+                                    Select your start and end dates to build your itinerary.
+                                </p>
+                    
+                            </div>
+                    
+                        </div>
+                    
+                    
+                        <button class="button button-primary" type="submit">
+                            Save My Itinerary
+                        </button>
+                    
+                    
+                        <p id="planner-status" class="search-status" aria-live="polite"></p>
+                    
+                    </form>
+
+                </div>
+
+
+                <aside class="planner-summary-card" aria-labelledby="planner-summary-title">
+
+                    <p class="eyebrow">YOUR NEXT ADVENTURE</p>
+
+                    <h2 id="planner-summary-title">
+                        A plan is better than “one day.”
+                    </h2>
+
+                    <p>
+                        Add the details as you figure them out. Your trip
+                        stays saved in this browser so you can come back to it.
+                    </p>
+
+                    <div class="planner-summary-list">
+                    
+                        <div>
+                            <span>Destination</span>
+                            <strong id="summary-destination">
+                                Not chosen yet
+                            </strong>
+                        </div>
+                    
+                        <div>
+                            <span>Dates</span>
+                            <strong id="summary-dates">
+                                Not chosen yet
+                            </strong>
+                        </div>
+                    
+                        <div>
+                            <span>Itinerary</span>
+                            <strong id="summary-itinerary">
+                                No plans added yet
+                            </strong>
+                        </div>
+                    
+                    </div>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+
+        <section class="saved-trip-section" aria-labelledby="saved-trip-title">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">ALREADY STARTED?</p>
+
+                <h2 id="saved-trip-title">
+                    Your saved trip
+                </h2>
+
+            </div>
+
+            <div id="saved-trip-container" class="saved-trip-container">
+
+                <p>
+                    Your saved trip will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+
+        <div class="footer-content">
+
+            <div>
+
+                <a class="logo" href="./index.html" aria-label="TripWise home">
+                    <span class="logo-mark" aria-hidden="true">✈</span>
+                    <span>TripWise</span>
+                </a>
+
+                <p>
+                    Less planning chaos. More stories worth telling.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+                <a href="./planner.html">Plan a Trip</a>
+                <a href="./destination.html">Destinations</a>
+                <a href="./favourites.html">Favourites</a>
+                <a href="./about.html">About</a>
+            </div>
+
+        </div>
+
+
+        <p class="copyright">
+            &copy;
+            <span id="current-year"></span>
+            TripWise. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
