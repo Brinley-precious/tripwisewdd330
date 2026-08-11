@@ -1,5 +1,3 @@
-
-
 const COUNTRIES_API_URL = "https://countries.dev";
 
 const FEATURED_COUNTRIES = [
