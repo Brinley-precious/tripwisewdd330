@@ -8,6 +8,12 @@ import { fetchCountry } from "./countriesapi.js";
 import { fetchWeather } from "./weatherapi.js";
 import { fetchPlaces } from "./placesapi.js";
 
+import {
+    updateCurrentYear,
+    setupMobileMenu,
+    escapeHTML
+} from "./utils.js";
+
 
 const DEFAULT_DESTINATION = "South Africa";
 const PLACES_LIMIT = 6;
@@ -66,50 +72,9 @@ document.addEventListener(
     }
 );
 
-
 /* =========================
    GENERAL PAGE FUNCTIONS
 ========================= */
-
-function updateCurrentYear() {
-
-    const yearElement =
-        document.querySelector("#current-year");
-
-    if (yearElement) {
-        yearElement.textContent =
-            new Date().getFullYear();
-    }
-}
-
-
-function setupMobileMenu() {
-
-    const menuButton =
-        document.querySelector(".menu-button");
-
-    const navigation =
-        document.querySelector("#site-navigation");
-
-    if (!menuButton || !navigation) {
-        return;
-    }
-
-    menuButton.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                navigation.classList.toggle("open");
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-        }
-    );
-}
-
 
 function getCountryFromUrl() {
 
@@ -833,6 +798,7 @@ function createPlaceCard(place) {
                     class="place-link"
                 >
                     Official website
+                    <span aria-hidden="true">↗</span>
                 </a>
             `
             : "";
@@ -847,6 +813,7 @@ function createPlaceCard(place) {
                     class="place-link"
                 >
                     Learn more
+                    <span aria-hidden="true">↗</span>
                 </a>
             `
             : "";
@@ -861,6 +828,7 @@ function createPlaceCard(place) {
                     class="place-link secondary"
                 >
                     View on map
+                    <span aria-hidden="true">↗</span>
                 </a>
             `
             : "";
@@ -1037,66 +1005,77 @@ async function loadDestination() {
 
 function setupScrollAnimations() {
 
-    const cards =
-        document.querySelectorAll(
-            ".destination-hero, .country-fact-card, .destination-placeholder-card"
-        );
+    const observeCards = () => {
 
+        const cards =
+            document.querySelectorAll(
+                ".destination-hero, .country-fact-card, .destination-placeholder-card, .place-card"
+            );
 
-    if (
-        !("IntersectionObserver" in window)
-    ) {
+        if (
+            !("IntersectionObserver" in window)
+        ) {
+
+            cards.forEach(
+                card =>
+                    card.classList.add("is-visible")
+            );
+
+            return;
+        }
+
+        const observer =
+            new IntersectionObserver(
+                (entries, observerInstance) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add(
+                                "is-visible"
+                            );
+
+                            observerInstance.unobserve(
+                                entry.target
+                            );
+                        }
+
+                    });
+                },
+                {
+                    threshold: 0.15
+                }
+            );
 
         cards.forEach(
             card =>
-                card.classList.add("is-visible")
+                observer.observe(card)
         );
+    };
 
-        return;
-    }
+    observeCards();
 
+    /*
+     * Places are loaded asynchronously, so observe
+     * newly-created place cards as well.
+     */
+    const placesContainer =
+        document.querySelector("#places-container");
 
-    const observer =
-        new IntersectionObserver(
-            (entries, observerInstance) => {
+    if (placesContainer) {
 
-                entries.forEach(entry => {
+        const mutationObserver =
+            new MutationObserver(() => {
+                observeCards();
+            });
 
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "is-visible"
-                        );
-
-                        observerInstance.unobserve(
-                            entry.target
-                        );
-                    }
-                });
-            },
+        mutationObserver.observe(
+            placesContainer,
             {
-                threshold: 0.15
+                childList: true,
+                subtree: true
             }
         );
-
-
-    cards.forEach(
-        card =>
-            observer.observe(card)
-    );
-}
-
-
-/* =========================
-   HTML SAFETY
-========================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    }
 }

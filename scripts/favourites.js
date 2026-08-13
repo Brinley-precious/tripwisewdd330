@@ -5,6 +5,14 @@ import {
     removeSavedTrip
 } from "./storage.js";
 
+import {
+    updateCurrentYear,
+    setupMobileMenu,
+    formatDate,
+    formatTime,
+    escapeHTML
+} from "./utils.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     updateCurrentYear();
     setupMobileMenu();
@@ -13,32 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     highlightRequestedTrip();
     
 });
-
-function updateCurrentYear() {
-    const yearElement = document.querySelector("#current-year");
-
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
-    }
-}
-
-function setupMobileMenu() {
-    const menuButton = document.querySelector(".menu-button");
-    const navigation = document.querySelector("#site-navigation");
-
-    if (!menuButton || !navigation) {
-        return;
-    }
-
-    menuButton.addEventListener("click", () => {
-        const isOpen = navigation.classList.toggle("open");
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-        );
-    });
-}
 
 async function displayFavourites() {
     const container =
@@ -420,6 +402,32 @@ function createSavedTripCard(trip) {
     </aside>
 `;
     
+    const budget =
+        trip.budget || {};
+
+    const budgetTotal =
+        Number(budget.total) || 0;
+
+    const budgetMarkup =
+        budgetTotal > 0
+            ? `
+            <aside class="saved-itinerary-budget">
+
+                <span>
+                    TRIP BUDGET
+                </span>
+
+                <strong>
+                    ${formatSavedBudget(
+                budgetTotal,
+                budget.currency || "NGN"
+            )}
+                </strong>
+
+            </aside>
+        `
+: "";
+    
     return `
         <article
             class="saved-itinerary-card saved-itinerary-detail-card"
@@ -461,6 +469,7 @@ function createSavedTripCard(trip) {
             </div>
 
             ${notesMarkup}
+            ${budgetMarkup}
 
             <footer class="saved-itinerary-footer">
 
@@ -606,60 +615,6 @@ function setupSavedTripButtons() {
     });
 }
 
-function formatDate(dateString) {
-
-    if (!dateString) {
-        return "Date unavailable";
-    }
-
-
-    const date =
-        new Date(
-            `${dateString}T00:00:00`
-        );
-
-
-    return new Intl.DateTimeFormat(
-        "en-US",
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        }
-    ).format(date);
-}
-
-function formatTime(timeString) {
-    const [hours, minutes] =
-        timeString
-            .split(":")
-            .map(Number);
-
-    if (
-        Number.isNaN(hours) ||
-        Number.isNaN(minutes)
-    ) {
-        return timeString;
-    }
-
-    const date = new Date();
-
-    date.setHours(
-        hours,
-        minutes,
-        0,
-        0
-    );
-
-    return new Intl.DateTimeFormat(
-        "en-US",
-        {
-            hour: "numeric",
-            minute: "2-digit"
-        }
-    ).format(date);
-}
-
 function highlightRequestedTrip() {
 
     const params =
@@ -699,11 +654,24 @@ function highlightRequestedTrip() {
     );
 }
 
-function escapeHTML(value) {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+function formatSavedBudget(
+    amount,
+    currency
+) {
+
+    try {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                style: "currency",
+                currency,
+                maximumFractionDigits: 2
+            }
+        ).format(amount);
+
+    } catch {
+
+        return `${currency} ${Number(amount).toFixed(2)}`;
+    }
 }

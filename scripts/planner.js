@@ -1,57 +1,24 @@
 import {
-    saveTrip
+    saveTrip,
+    getSavedTrips,
+    removeSavedTrip
 } from "./storage.js";
 
-const TRIP_STORAGE_KEY = "tripwiseTrip";
+import {
+    updateCurrentYear,
+    setupMobileMenu,
+    formatDate,
+    formatDateForStorage,
+    escapeHTML
+} from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     updateCurrentYear();
     setupMobileMenu();
     setupPlanner();
+    setupBudgetCalculator();
     loadSavedTrip();
 });
-
-
-/* =========================
-   GENERAL FUNCTIONS
-========================= */
-
-function updateCurrentYear() {
-
-    const yearElement =
-        document.querySelector("#current-year");
-
-    if (yearElement) {
-        yearElement.textContent =
-            new Date().getFullYear();
-    }
-}
-
-
-function setupMobileMenu() {
-
-    const menuButton =
-        document.querySelector(".menu-button");
-
-    const navigation =
-        document.querySelector("#site-navigation");
-
-    if (!menuButton || !navigation) {
-        return;
-    }
-
-    menuButton.addEventListener("click", () => {
-
-        const isOpen =
-            navigation.classList.toggle("open");
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-        );
-    });
-}
-
 
 /* =========================
    PLANNER SETUP
@@ -115,6 +82,7 @@ function setupPlanner() {
         "submit",
         handlePlannerSubmit
     );
+    setupBudgetCalculator();
 }
 
 
@@ -284,7 +252,8 @@ function createDayHTML(day, index) {
                     (item, itemIndex) =>
                         createItineraryItemHTML(
                             item,
-                            itemIndex
+                            itemIndex,
+                            day.date
                         )
                 )
                 .join("")
@@ -340,8 +309,17 @@ function createDayHTML(day, index) {
 
 function createItineraryItemHTML(
     item,
-    index
+    index,
+    date = ""
 ) {
+
+    const safeDate =
+        String(date)
+            .replace(/[^a-zA-Z0-9_-]/g, "-");
+
+    const itemId =
+        `${safeDate}-${index}`;
+
 
     return `
         <div
@@ -353,11 +331,15 @@ function createItineraryItemHTML(
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="itinerary-type-${itemId}">
                         Type
                     </label>
 
-                    <select class="itinerary-item-type">
+                    <select
+                        id="itinerary-type-${itemId}"
+                        name="itineraryType-${itemId}"
+                        class="itinerary-item-type"
+                    >
 
                         <option
                             value="Attraction"
@@ -394,15 +376,18 @@ function createItineraryItemHTML(
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="itinerary-title-${itemId}">
                         What are you doing?
                     </label>
 
                     <input
                         type="text"
+                        id="itinerary-title-${itemId}"
+                        name="itineraryTitle-${itemId}"
                         class="itinerary-item-title"
                         value="${escapeHTML(item.title || "")}"
                         placeholder="e.g. Visit the Eiffel Tower"
+                        autocomplete="off"
                     >
 
                 </div>
@@ -410,12 +395,14 @@ function createItineraryItemHTML(
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="itinerary-time-${itemId}">
                         Time
                     </label>
 
                     <input
                         type="time"
+                        id="itinerary-time-${itemId}"
+                        name="itineraryTime-${itemId}"
                         class="itinerary-item-time"
                         value="${escapeHTML(item.time || "")}"
                     >
@@ -427,11 +414,13 @@ function createItineraryItemHTML(
 
             <div class="form-group">
 
-                <label>
+                <label for="itinerary-notes-${itemId}">
                     Notes
                 </label>
 
                 <textarea
+                    id="itinerary-notes-${itemId}"
+                    name="itineraryNotes-${itemId}"
                     class="itinerary-item-notes"
                     rows="3"
                     placeholder="Add details for this plan..."
@@ -577,8 +566,9 @@ function addItineraryItem(day) {
             itemsContainer
                 .querySelectorAll(
                     ".itinerary-item"
-                ).length
-        );
+            ).length,
+            day.dataset.date
+       );
 
 
     const item =
@@ -752,6 +742,459 @@ function collectCurrentItinerary() {
         });
 }
 
+/* =========================
+   TRIP BUDGET
+========================= */
+
+const POPULAR_CURRENCIES = [
+    "NGN",
+    "USD",
+    "EUR",
+    "GBP",
+    "ZAR",
+    "CAD",
+    "AUD",
+    "JPY"
+];
+
+
+function setupBudgetCalculator() {
+
+    const fields =
+        document.querySelectorAll(
+            "[data-budget-field]"
+        );
+
+    const currency =
+        document.querySelector(
+            "#budget-currency"
+        );
+
+    const total =
+        document.querySelector(
+            "#budget-total"
+        );
+
+    const resetButton =
+        document.querySelector(
+            "#budget-reset"
+        );
+
+    const useTripButton =
+        document.querySelector(
+            "#budget-use-trip"
+        );
+
+    if (!fields.length || !total) {
+        return;
+    }
+
+    populateCurrencyOptions();
+
+    function updateBudget() {
+
+        const amount =
+            Array.from(fields)
+                .reduce(
+                    (sum, field) =>
+                        sum +
+                        normaliseBudgetAmount(
+                            field.value
+                        ),
+                    0
+                );
+
+        total.textContent =
+            formatBudgetCurrency(
+                amount,
+                currency?.value || "NGN"
+            );
+    }
+
+
+    fields.forEach(field => {
+
+        field.addEventListener(
+            "input",
+            updateBudget
+        );
+
+        field.addEventListener(
+            "change",
+            updateBudget
+        );
+    });
+
+
+    currency?.addEventListener(
+        "change",
+        updateBudget
+    );
+
+
+    resetButton?.addEventListener(
+        "click",
+        () => {
+
+            fields.forEach(
+                field => {
+                    field.value = "";
+                }
+            );
+
+            if (currency) {
+                currency.value = "NGN";
+            }
+
+            updateBudget();
+
+            updateBudgetSummary();
+
+            showPlannerStatus(
+                "Your trip budget has been reset."
+            );
+        }
+    );
+
+
+    useTripButton?.addEventListener(
+        "click",
+        useBudgetInTrip
+    );
+
+
+    updateBudget();
+    updateBudgetSummary();
+}
+
+
+/* ---------------------------------
+   CURRENCY OPTIONS
+--------------------------------- */
+
+function populateCurrencyOptions() {
+
+    const select =
+        document.querySelector(
+            "#budget-currency"
+        );
+
+    if (!select) {
+        return;
+    }
+
+    const currentValue =
+        select.value || "NGN";
+
+    let currencies = [];
+
+    try {
+
+        currencies =
+            Intl.supportedValuesOf(
+                "currency"
+            );
+
+    } catch (error) {
+
+        currencies = [
+            "NGN",
+            "USD",
+            "EUR",
+            "GBP",
+            "ZAR",
+            "CAD",
+            "AUD",
+            "JPY"
+        ];
+    }
+
+
+    const uniqueCurrencies =
+        Array.from(
+            new Set(currencies)
+        );
+
+
+    const popular =
+        POPULAR_CURRENCIES.filter(
+            code =>
+                uniqueCurrencies.includes(code)
+        );
+
+
+    const remaining =
+        uniqueCurrencies
+            .filter(
+                code =>
+                    !popular.includes(code)
+            )
+            .sort();
+
+
+    const orderedCurrencies =
+        [
+            ...popular,
+            ...remaining
+        ];
+
+
+    let displayNames;
+
+    try {
+
+        displayNames =
+            new Intl.DisplayNames(
+                ["en"],
+                {
+                    type: "currency"
+                }
+            );
+
+    } catch {
+
+        displayNames = null;
+    }
+
+
+    select.innerHTML =
+        orderedCurrencies
+            .map(code => {
+
+                let name = code;
+
+                try {
+
+                    name =
+                        displayNames?.of(code) ||
+                        code;
+
+                } catch {
+
+                    name = code;
+                }
+
+                return `
+                    <option value="${escapeHTML(code)}">
+                        ${escapeHTML(name)} (${escapeHTML(code)})
+                    </option>
+                `;
+
+            })
+            .join("");
+
+
+    if (
+        orderedCurrencies.includes(
+            currentValue
+        )
+    ) {
+
+        select.value =
+            currentValue;
+
+    } else {
+
+        select.value =
+            "NGN";
+    }
+}
+
+
+/* ---------------------------------
+   BUDGET DATA
+--------------------------------- */
+
+function collectBudgetData() {
+
+    const fields = [
+        "accommodation",
+        "transportation",
+        "food",
+        "activities",
+        "other"
+    ];
+
+    const budget = {};
+
+    fields.forEach(field => {
+
+        const input =
+            document.querySelector(
+                `[data-budget-field="${field}"]`
+            );
+
+        budget[field] =
+            normaliseBudgetAmount(
+                input?.value
+            );
+    });
+
+
+    const currency =
+        document.querySelector(
+            "#budget-currency"
+        );
+
+
+    budget.currency =
+        currency?.value || "NGN";
+
+
+    budget.total =
+        fields.reduce(
+            (sum, field) =>
+                sum + budget[field],
+            0
+        );
+
+
+    return budget;
+}
+
+
+/* ---------------------------------
+   BUDGET SUMMARY
+--------------------------------- */
+
+function updateBudgetSummary() {
+
+    const summary =
+        document.querySelector(
+            "#summary-budget"
+        );
+
+    if (!summary) {
+        return;
+    }
+
+    const budget =
+        collectBudgetData();
+
+
+    if (budget.total <= 0) {
+
+        summary.textContent =
+            "Not set yet";
+
+        return;
+    }
+
+
+    summary.textContent =
+        formatBudgetCurrency(
+            budget.total,
+            budget.currency
+        );
+}
+
+
+/* ---------------------------------
+   USE BUDGET IN TRIP
+--------------------------------- */
+
+function useBudgetInTrip() {
+
+    const budget =
+        collectBudgetData();
+
+
+    if (budget.total <= 0) {
+
+        showPlannerStatus(
+            "Add at least one estimated cost before using your budget."
+        );
+
+        return;
+    }
+
+
+    const summary =
+        document.querySelector(
+            "#summary-budget"
+        );
+
+
+    if (summary) {
+
+        summary.textContent =
+            formatBudgetCurrency(
+                budget.total,
+                budget.currency
+            );
+    }
+
+
+    showPlannerStatus(
+        "Your trip budget has been added to your trip."
+    );
+}
+
+
+/* ---------------------------------
+   BUDGET CURRENCY FORMAT
+--------------------------------- */
+
+function formatBudgetCurrency(
+    amount,
+    currency
+) {
+
+    try {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                style: "currency",
+                currency,
+                maximumFractionDigits: 2
+            }
+        ).format(amount);
+
+    } catch {
+
+        return `${currency} ${Number(amount).toFixed(2)}`;
+    }
+}
+
+
+/* ---------------------------------
+   BUDGET NUMBER NORMALISATION
+--------------------------------- */
+
+function normaliseBudgetAmount(value) {
+
+    const amount =
+        Number(value);
+
+    if (
+        !Number.isFinite(amount) ||
+        amount < 0
+    ) {
+        return 0;
+    }
+
+    return amount;
+}
+
+function formatBudgetAmount(amount, currency) {
+
+    try {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                style: "currency",
+                currency,
+                maximumFractionDigits: 2
+            }
+        ).format(amount);
+
+    } catch {
+
+        return `${currency} ${Number(amount).toFixed(2)}`;
+    }
+}
 
 /* =========================
    FORM SUBMISSION
@@ -829,7 +1272,9 @@ function handlePlannerSubmit(event) {
     const itinerary =
         collectCurrentItinerary();
 
-
+    const budget =
+        collectBudgetData();
+    
     const trip = {
         id:
             new Date().toISOString(),
@@ -844,18 +1289,14 @@ function handlePlannerSubmit(event) {
 
         itinerary,
 
+        budget,
+
         savedAt:
             new Date().toISOString()
     };
 
     const savedTrip =
         saveTrip(trip);
-    
-    localStorage.setItem(
-        TRIP_STORAGE_KEY,
-        JSON.stringify(trip)
-    );
-
 
     displaySavedTrip(savedTrip);
 
@@ -874,28 +1315,19 @@ function handlePlannerSubmit(event) {
 function loadSavedTrip() {
 
     const savedTrip =
-        localStorage.getItem(
-            TRIP_STORAGE_KEY
-        );
-
-
-    if (!savedTrip) {
+        getSavedTrips();
+    
+    if (!savedTrip.length) {
         return;
     }
 
-
+    const trip =
+        savedTrip[savedTrip.length - 1];
+    
     try {
-
-        const trip =
-            JSON.parse(savedTrip);
-
-
         populateForm(trip);
-
         displaySavedTrip(trip);
-
         renderSavedItinerary(trip);
-
         updateSummaryFromTrip(trip);
 
 
@@ -904,10 +1336,6 @@ function loadSavedTrip() {
         console.error(
             "Could not load saved trip:",
             error
-        );
-
-        localStorage.removeItem(
-            TRIP_STORAGE_KEY
         );
     }
 }
@@ -955,8 +1383,67 @@ function populateForm(trip) {
         notes.value =
             trip.notes || "";
     }
+    populateBudget(trip.budget);
 }
 
+function populateBudget(budget) {
+
+    const fields = [
+        "accommodation",
+        "transportation",
+        "food",
+        "activities",
+        "other"
+    ];
+
+    fields.forEach(field => {
+
+        const input =
+            document.querySelector(
+                `[data-budget-field="${field}"]`
+            );
+
+        if (input) {
+            input.value =
+                budget?.[field] ?? "";
+        }
+    });
+
+    const currency =
+        document.querySelector(
+            "#budget-currency"
+        );
+
+    if (currency) {
+
+        currency.value =
+            budget?.currency || "NGN";
+    }
+
+    const total =
+        document.querySelector(
+            "#budget-total"
+        );
+
+    if (total) {
+
+        const amount =
+            fields.reduce(
+                (sum, field) =>
+                    sum +
+                    normaliseBudgetAmount(
+                        budget?.[field]
+                    ),
+                0
+            );
+
+        total.textContent =
+            formatBudgetAmount(
+                amount,
+                currency?.value || "NGN"
+            );
+    }
+}
 
 function renderSavedItinerary(trip) {
 
@@ -1128,10 +1615,15 @@ function displaySavedTrip(trip) {
 
 function clearSavedTrip() {
 
-    localStorage.removeItem(
-        TRIP_STORAGE_KEY
-    );
-
+    const savedTrips =
+        getSavedTrips();
+    
+    const currentTrip =
+        savedTrips[savedTrips.length - 1];
+    
+    if (currentTrip?.id) {
+        removeSavedTrip(currentTrip.id);
+    }
 
     const form =
         document.querySelector(
@@ -1268,7 +1760,36 @@ function updateSummaryFromTrip(trip) {
             "#summary-itinerary"
         );
 
+    const budgetSummary =
+        document.querySelector(
+            "#summary-budget"
+        );
 
+
+    if (budgetSummary) {
+
+        const budget =
+            trip.budget;
+
+
+        if (
+            budget &&
+            Number(budget.total) > 0
+        ) {
+
+            budgetSummary.textContent =
+                formatBudgetCurrency(
+                    Number(budget.total),
+                    budget.currency || "NGN"
+                );
+
+        } else {
+
+            budgetSummary.textContent =
+                "Not set yet";
+        }
+    }
+        
     if (destination) {
 
         destination.textContent =
@@ -1333,43 +1854,6 @@ function renderEmptyItinerary(message) {
     `;
 }
 
-
-/* =========================
-   DATE FUNCTIONS
-========================= */
-
-function formatDate(dateString) {
-
-    if (!dateString) {
-        return "Date unavailable";
-    }
-
-
-    const date =
-        new Date(
-            `${dateString}T00:00:00`
-        );
-
-
-    return new Intl.DateTimeFormat(
-        "en-US",
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        }
-    ).format(date);
-}
-
-
-function formatDateForStorage(date) {
-
-    return date
-        .toISOString()
-        .split("T")[0];
-}
-
-
 /* =========================
    STATUS
 ========================= */
@@ -1386,19 +1870,4 @@ function showPlannerStatus(message) {
         status.textContent =
             message;
     }
-}
-
-
-/* =========================
-   HTML SAFETY
-========================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
 }

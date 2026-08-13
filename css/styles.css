@@ -243,10 +243,11 @@ main {
     min-height: 680px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: hidden;
     isolation: isolate;
     padding: 100px 6%;
+    background: var(--background-dark);
 }
 
 .hero-image {
@@ -259,8 +260,18 @@ main {
 
     object-fit: cover;
     object-position: center;
+
+    transform: scale(1.04);
+    transform-origin: center;
+    animation: heroImageDrift 18s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
+/*
+ * Strong dark gradient over the image.
+ * The left side is intentionally darker because
+ * that is where the text sits.
+ */
 .hero::before {
     content: "";
     position: absolute;
@@ -268,69 +279,105 @@ main {
     z-index: -2;
 
     background:
-        linear-gradient(110deg,
-            rgba(5, 20, 32, 0.98) 0%,
-            rgba(5, 20, 32, 0.84) 22%,
-            rgba(5, 20, 32, 0.58) 46%,
-            rgba(5, 20, 32, 0.34) 72%,
-            rgba(5, 20, 32, 0.18) 100%);
+        linear-gradient(90deg,
+            var(--background-dark) 0%,
+            color-mix(in srgb,
+                var(--background-dark) 78%,
+                transparent) 42%,
+            color-mix(in srgb,
+                var(--background-dark) 45%,
+                transparent) 68%,
+            transparent 100%);
 }
 
+/*
+ * Additional vertical protection prevents
+ * text from sitting directly on bright parts
+ * of the photograph.
+ */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: -1;
+
     background:
-        radial-gradient(circle at 25% 18%,
-            rgba(5, 20, 32, 0.90),
-            transparent 40%),
         linear-gradient(180deg,
-            rgba(5, 20, 32, 0.30) 0%,
-            rgba(5, 20, 32, 0.14) 35%,
-            transparent 100%);
+            color-mix(in srgb,
+                var(--background-dark) 42%,
+                transparent) 0%,
+            transparent 35%,
+            color-mix(in srgb,
+                var(--background-dark) 35%,
+                transparent) 100%);
+}
+
+/*
+ * Slow cinematic movement on the hero image.
+ */
+@keyframes heroImageDrift {
+
+    0% {
+        transform: scale(1.04) translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: scale(1.10) translate3d(-1%, -1%, 0);
+    }
 }
 
 .hero-content {
     position: relative;
     z-index: 1;
-    width: min(100%, 980px);
-    margin: 0 auto;
-    padding: clamp(28px, 4vw, 48px) 1vw clamp(38px, 5vw, 58px);
-    background: transparent;
-    box-shadow: none;
+
+    width: min(100%, 900px);
+    margin: 0;
+
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     align-items: flex-start;
+
+    gap: 1.5rem;
+
+    padding: clamp(28px, 4vw, 48px) 0;
+
+    color: var(--text-light);
     text-align: left;
-    color: var(--white);
-    text-shadow: 0 18px 35px rgba(2, 9, 22, 0.22);
+
+    text-shadow:
+        0 2px 10px color-mix(in srgb,
+            var(--background-dark) 70%,
+            transparent);
 }
 
 .hero-content::before {
     content: "";
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: -10%;
     z-index: -1;
-    border-radius: 0;
-    background: linear-gradient(180deg,
-            rgba(5, 20, 32, 0.92) 0%,
-            rgba(5, 20, 32, 0.78) 18%,
-            rgba(5, 20, 32, 0.56) 36%,
-            rgba(5, 20, 32, 0.34) 58%,
-            rgba(5, 20, 32, 0.18) 82%,
-            transparent 100%);
+
+    width: 85%;
+
+    background:
+        linear-gradient(90deg,
+            color-mix(in srgb,
+                var(--background-dark) 48%,
+                transparent),
+            transparent);
 }
 
 .hero h1 {
-    max-width: 100%;
+    max-width: 900px;
     margin: 0;
-    margin-bottom: 0.25rem;
+
+    font-family: "Roboto", sans-serif;
     font-size: clamp(3.75rem, 5vw, 6.25rem);
+    font-weight: 900;
     line-height: 0.95;
     letter-spacing: -0.045em;
-    color: var(--white);
-    font-weight: 900;
+
+    color: var(--text-light);
 }
 
 .hero-title-line {
@@ -343,10 +390,11 @@ main {
 }
 
 .hero-text {
-    max-width: 740px;
-    color: var(--white);
+    max-width: 700px;
     margin: 0;
-    margin-top: 0.75rem;
+
+    color: var(--text-light);
+
     font-size: 1rem;
     line-height: 1.85;
 }
@@ -354,7 +402,7 @@ main {
 .hero-text em {
     font-style: normal;
     font-weight: 900;
-    color: var(--white);
+    color: var(--text-light);
 }
 
 .hero-actions {
@@ -362,8 +410,10 @@ main {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    gap: clamp(14px, 2vw, 22px);
+
     width: 100%;
+
+    gap: clamp(14px, 2vw, 22px);
     margin-top: clamp(28px, 3vw, 42px);
 }
 
@@ -371,15 +421,35 @@ main {
     min-width: 190px;
 }
 
-.button-secondary {
-    color: var(--white);
-    background: rgba(5, 20, 32, 0.92);
-    border-color: rgba(255, 255, 255, 0.95);
+.hero .button-primary {
+    background: var(--primary);
+    color: var(--text);
 }
 
-.button-secondary:hover {
-    background: rgba(5, 20, 32, 0.90);
-    color: var(--white);
+.hero .button-primary:hover {
+    background: var(--primary-dark);
+}
+
+.hero .button-secondary {
+    color: var(--text-light);
+    background: var(--background-dark);
+    border-color: var(--text-light);
+}
+
+.hero .button-secondary:hover {
+    background: var(--teal-dark);
+    color: var(--text-light);
+}
+
+/*
+ * Respect users who prefer reduced motion.
+ */
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-image {
+        animation: none;
+        transform: scale(1.04);
+    }
 }
 
 /* =========================
@@ -847,6 +917,213 @@ main {
 .country-fact-card.is-visible,
 .destination-placeholder-card.is-visible {
     animation: cardSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* =========================================
+   PLACES / THINGS TO DO
+========================================= */
+
+.places-section {
+    width: min(100%, var(--max-width));
+    margin: 0 auto 80px;
+}
+
+.places-section .section-heading {
+    margin-bottom: 32px;
+}
+
+.places-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+/* Place card */
+.place-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+
+    background: var(--background-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.place-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+
+    background: var(--teal);
+}
+
+.place-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--teal);
+    box-shadow: var(--shadow-md);
+}
+
+.place-card-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 28px 26px 24px;
+}
+
+/* Category */
+.place-card-content .eyebrow {
+    margin-bottom: 10px;
+    color: var(--teal-dark);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+/* Place name */
+.place-card h3 {
+    margin: 0 0 10px;
+
+    color: var(--text);
+    font-family: "Roboto", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* Address */
+.place-card-address {
+    margin: 0 0 16px;
+
+    color: var(--teal-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* Description */
+.place-card-description {
+    margin: 0 0 24px;
+
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+/* Links container */
+.place-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: auto;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+}
+
+/* Accessible high-contrast links */
+.place-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 9px 15px;
+
+    border: 2px solid var(--teal-dark);
+    border-radius: 999px;
+
+    background: var(--background-light);
+    color: var(--teal-dark);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.place-link:hover {
+    background: var(--teal-dark);
+    color: var(--white);
+    border-color: var(--teal-dark);
+    transform: translateY(-2px);
+}
+
+.place-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Secondary map link */
+.place-link.secondary {
+    border-color: var(--primary-dark);
+    background: var(--primary);
+    color: var(--text);
+}
+
+.place-link.secondary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: var(--text);
+}
+
+/* Keyboard focus for cards */
+.place-card:focus-within {
+    border-color: var(--teal);
+    box-shadow: var(--shadow-md);
+}
+
+/* Empty/error states */
+.destination-placeholder-card {
+    grid-column: 1 / -1;
+
+    padding: 48px 24px;
+
+    background: var(--background-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.destination-placeholder-card .feature-icon {
+    display: block;
+    margin: 0 auto 16px;
+}
+
+.destination-placeholder-card h3 {
+    margin-bottom: 10px;
+
+    color: var(--text);
+    font-family: "Roboto", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.destination-placeholder-card p {
+    max-width: 460px;
+    margin: 0 auto;
+
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
 }
 
 /* =========================================
@@ -1483,3 +1760,795 @@ main {
     white-space: nowrap;
 }
 
+/* =====================================================
+   ABOUT PAGE HERO
+===================================================== */
+
+.about-hero {
+    position: relative;
+    min-height: 620px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    background: var(--background-light);
+}
+
+.about-hero-image-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+}
+
+.about-hero-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    transform: scale(1.04);
+
+    animation:
+        aboutHeroDrift 18s ease-in-out infinite alternate;
+
+    will-change: transform;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+
+    /*
+     * The left side remains clean and bright for the
+     * dark hero typography. The image gradually takes
+     * over toward the right.
+     */
+    background:
+        linear-gradient(90deg,
+            #ffffff 0%,
+            #ffffff 31%,
+            rgba(255, 255, 255, 0.97) 38%,
+            rgba(255, 255, 255, 0.78) 48%,
+            rgba(255, 255, 255, 0.25) 67%,
+            rgba(255, 255, 255, 0) 100%);
+}
+
+.about-hero-content {
+    width: min(100% - 40px, var(--max-width));
+    margin: 0 auto;
+
+    padding: 90px 0;
+
+    color: var(--text);
+}
+
+.about-hero-content .eyebrow {
+    color: var(--teal-dark);
+}
+
+.about-hero-content h1 {
+    max-width: 650px;
+    margin-bottom: 28px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: clamp(3.8rem, 6vw, 6.4rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+}
+
+.about-hero-content h1 span {
+    display: block;
+}
+
+
+.about-hero-content h1 strong {
+    color: #8a5200;
+}
+
+.about-hero-lead {
+    max-width: 560px;
+
+    color: var(--text);
+
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.about-hero-lead strong {
+    font-weight: 900;
+}
+
+
+@keyframes aboutHeroDrift {
+
+    0% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1.10);
+    }
+
+}
+
+
+/* =====================================================
+   ABOUT STORY
+===================================================== */
+
+.about-story-section {
+    padding: 105px 20px;
+    background: var(--background-light);
+}
+
+.about-story {
+    width: min(100%, 1080px);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: center;
+
+    gap: 70px;
+}
+
+
+/*
+ * The image is intentionally kept at the proportions
+ * supplied in the HTML: 500 × 533.
+ */
+.about-story-image {
+    width: min(100%, 500px);
+    margin: 0 auto;
+
+    padding: 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+}
+
+.about-story-image img {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 500 / 533;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 15px;
+}
+
+
+/*
+ * Decorative frame detail.
+ */
+.about-story-image::before {
+    content: "";
+
+    position: absolute;
+
+    width: 48px;
+    height: 48px;
+
+    top: -14px;
+    left: -14px;
+
+    border-top: 3px solid var(--teal);
+    border-left: 3px solid var(--teal);
+
+    border-radius: 8px 0 0 0;
+
+    pointer-events: none;
+}
+
+
+.about-story-image::after {
+    content: "";
+
+    position: absolute;
+
+    width: 48px;
+    height: 48px;
+
+    right: -14px;
+    bottom: -14px;
+
+    border-right: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+
+    border-radius: 0 0 8px 0;
+
+    pointer-events: none;
+}
+
+
+/*
+ * IMPORTANT:
+ * This matches the actual HTML class.
+ *
+ * Natural aspect ratio is preserved:
+ * 500 × 533.
+ */
+.about-story-image-content {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 13px;
+}
+
+
+.about-story-content {
+    max-width: 580px;
+}
+
+.about-story-content .eyebrow {
+    color: var(--teal-dark);
+}
+
+.about-story-content h2 {
+    margin-bottom: 28px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+}
+
+.about-story-content h2 span {
+    color: #8a5200;
+}
+
+.about-story-content p {
+    margin-bottom: 18px;
+
+    color: var(--text-muted);
+
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.about-story-content .about-story-highlight {
+    margin: 28px 0;
+
+    color: var(--text);
+
+    font-size: 1.2rem;
+}
+
+.about-story-highlight strong {
+    color: var(--teal-dark);
+}
+
+
+/* =====================================================
+   ABOUT BELIEFS
+===================================================== */
+
+.about-belief-section {
+    padding: 105px 20px;
+    background: var(--background);
+}
+
+.about-belief-section .section-heading {
+    margin-bottom: 55px;
+}
+
+.about-belief-section .section-heading .eyebrow {
+    color: var(--teal-dark);
+}
+
+.about-belief-section .section-heading h2 span {
+    color: #8a5200;
+}
+
+.about-principles {
+    width: min(100%, var(--max-width));
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.about-principle {
+    min-height: 240px;
+    padding: 30px 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    background: var(--background-light);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.about-principle:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.about-principle-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 22px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: rgba(8, 127, 115, 0.10);
+    color: var(--teal-dark);
+
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.about-principle h3 {
+    margin-bottom: 10px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.about-principle p {
+    color: var(--text-muted);
+
+    font-size: 0.8rem;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   ABOUT EXPERIENCE / TEAL FEATURE SECTION
+===================================================== */
+
+.about-experience-section {
+    padding: 120px 20px;
+    background: var(--teal-dark);
+    color: var(--white);
+}
+
+.about-experience {
+    width: min(100%, var(--max-width));
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 390px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(40px, 5vw, 80px);
+}
+
+
+/* =========================
+   LEFT CONTENT
+========================= */
+
+.about-experience-content {
+    min-width: 0;
+}
+
+.about-experience-content .eyebrow {
+    margin-bottom: 28px;
+
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+}
+
+.about-experience-content h2 {
+    max-width: 470px;
+    margin: 0;
+
+    font-family: "Roboto", sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+
+    color: var(--white);
+}
+
+.about-experience-content h2 span {
+    color: var(--primary);
+}
+
+.about-experience-content>p {
+    max-width: 430px;
+    margin-top: 28px;
+
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   CENTER CARD
+========================= */
+
+.about-experience-card {
+    width: 100%;
+    min-height: 400px;
+
+    padding: 42px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 30px;
+
+    background: var(--white);
+    color: var(--text);
+
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.18),
+        0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.about-experience-card .eyebrow {
+    margin-bottom: 18px;
+
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+}
+
+.about-experience-card h3 {
+    margin: 0;
+
+    font-family: "Roboto", sans-serif;
+    font-size: clamp(2rem, 3vw, 2.65rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+}
+
+.about-experience-card p {
+    margin-top: 24px;
+
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+}
+
+.about-experience-card .button {
+    align-self: flex-start;
+    min-width: 190px;
+    margin-top: 30px;
+}
+
+
+/* =========================
+   RIGHT BENEFITS
+========================= */
+
+.about-experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    min-width: 0;
+}
+
+.about-experience-list-item {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+
+    min-height: 70px;
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.about-experience-list-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.about-experience-list-icon {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+    color: var(--text);
+
+    font-size: 0.85rem;
+    font-weight: 900;
+}
+
+.about-experience-list-item p {
+    margin: 0;
+
+    color: var(--white);
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+
+/* =====================================================
+   ABOUT FOUNDER
+===================================================== */
+
+.about-founder-section {
+    padding: 110px 20px;
+    background: var(--background-light);
+}
+
+.about-founder {
+    width: min(100%, 1080px);
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 1.1fr 0.9fr;
+
+    align-items: center;
+
+    gap: 70px;
+}
+
+.about-founder-content {
+    max-width: 600px;
+}
+
+.about-founder-content .eyebrow {
+    color: var(--teal-dark);
+}
+
+.about-founder-content h2 {
+    margin-bottom: 28px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: clamp(2.7rem, 4vw, 4.2rem);
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+}
+
+.about-founder-content h2 span {
+    color: #8a5200;
+}
+
+.about-founder-content p {
+    margin-bottom: 18px;
+
+    color: var(--text-muted);
+
+    font-size: 0.95rem;
+    line-height: 1.85;
+}
+
+.about-founder-content em {
+    color: var(--text);
+    font-style: normal;
+    font-weight: 800;
+}
+
+.about-founder-signoff {
+    margin-top: 28px;
+
+    color: var(--teal-dark) !important;
+    font-weight: 800;
+}
+
+
+/*
+ * Founder image frame.
+ *
+ * Actual HTML image size:
+ * 400 × 550.
+ *
+ * Nothing here crops it.
+ */
+.about-founder-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.about-founder-frame {
+    width: min(100%, 400px);
+    margin: 0 auto;
+
+    padding: 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+}
+
+.about-founder-frame img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 400 / 550;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 15px;
+}
+
+.about-founder-frame::before {
+    content: "";
+
+    position: absolute;
+
+    width: 48px;
+    height: 48px;
+
+    top: -14px;
+    right: -14px;
+
+    border-top: 3px solid var(--teal);
+    border-right: 3px solid var(--teal);
+
+    border-radius: 0 8px 0 0;
+
+    pointer-events: none;
+}
+
+.about-founder-frame::after {
+    content: "";
+
+    position: absolute;
+
+    width: 48px;
+    height: 48px;
+
+    bottom: -14px;
+    left: -14px;
+
+    border-left: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+
+    border-radius: 0 0 0 8px;
+
+    pointer-events: none;
+}
+
+.about-founder-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 13px;
+}
+
+
+/* =====================================================
+   ABOUT CTA
+===================================================== */
+
+.about-cta-section {
+    padding: 110px 20px;
+    background: var(--background);
+}
+
+.about-cta-content {
+    width: min(100%, 900px);
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.about-cta-content .eyebrow {
+    color: var(--teal-dark);
+}
+
+.about-cta-content h2 {
+    margin-bottom: 22px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: clamp(3rem, 6vw, 5.4rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+}
+
+.about-cta-content h2 span {
+    color: #8a5200;
+}
+
+.about-cta-content>p:not(.eyebrow) {
+    max-width: 550px;
+    margin: 0 auto 30px;
+
+    color: var(--text-muted);
+
+    font-size: 0.95rem;
+}
+
+.about-cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+}
+
+.about-cta-actions .button {
+    min-width: 190px;
+}
+
+
+/*
+ * Accessible secondary CTA.
+ */
+.about-cta-actions .button-secondary {
+    color: var(--teal-dark);
+    border-color: var(--teal-dark);
+    background: transparent;
+}
+
+.about-cta-actions .button-secondary:hover {
+    background: var(--teal-dark);
+    border-color: var(--teal-dark);
+    color: var(--white);
+}
+
+
+/* =====================================================
+   ABOUT REVEAL STATES
+===================================================== */
+
+.about-story,
+.about-principle,
+.about-experience,
+.about-founder {
+    opacity: 0;
+    transform: translateY(24px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+.about-story.is-visible,
+.about-principle.is-visible,
+.about-experience.is-visible,
+.about-founder.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}

@@ -1,3 +1,9 @@
+import {
+    updateCurrentYear,
+    setupMobileMenu,
+    escapeHTML
+} from "./utils.js";
+
 const COUNTRIES_API_URL = "https://countries.dev";
 
 const FEATURED_COUNTRIES = [
@@ -38,32 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
-
-function updateCurrentYear() {
-    const yearElement = document.querySelector("#current-year");
-
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
-    }
-}
-
-
-function setupMobileMenu() {
-    const menuButton = document.querySelector(".menu-button");
-    const navigation = document.querySelector("#site-navigation");
-
-    if (!menuButton || !navigation) {
-        return;
-    }
-
-    menuButton.addEventListener("click", () => {
-        const isOpen = navigation.classList.toggle("open");
-
-        menuButton.setAttribute("aria-expanded", isOpen);
-    });
-}
-
 
 async function fetchCountry(countryName) {
     const url =

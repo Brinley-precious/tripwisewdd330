@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="./css/planner.css">
     <link rel="stylesheet" href="./css/responsive.css">
 
-    <script type="module" src="./scripts/planner.js" defer></script>
+    <script type="module" src="./scripts/planner.js"></script>
 </head>
 
 <body>
@@ -76,169 +76,305 @@
 
         <section class="planner-section" aria-labelledby="trip-form-title">
 
-            <div class="planner-layout">
-
-                <div class="planner-form-card">
-
-                    <div class="section-heading">
-                        <p class="eyebrow">YOUR TRIP</p>
-
-                        <h2 id="trip-form-title">
-                            Start planning
-                        </h2>
-
-                        <p>
-                            You don't need every detail figured out yet.
-                            Start with what you know.
-                        </p>
-                    </div>
-
-
-                    <form id="trip-form">
-                    
-                        <div class="form-group">
-                    
-                            <label for="trip-destination">
-                                Where are you going?
-                            </label>
-                    
-                            <input type="text" id="trip-destination" name="destination" placeholder="Try Paris, Japan, Cape Town..."
-                                autocomplete="off" required>
-                    
-                        </div>
-                    
-                    
-                        <div class="planner-date-grid">
-                    
-                            <div class="form-group">
-                    
-                                <label for="trip-start">
-                                    Start date
-                                </label>
-                    
-                                <input type="date" id="trip-start" name="startDate" required>
-                    
-                            </div>
-                    
-                    
-                            <div class="form-group">
-                    
-                                <label for="trip-end">
-                                    End date
-                                </label>
-                    
-                                <input type="date" id="trip-end" name="endDate" required>
-                    
-                            </div>
-                    
-                        </div>
-                    
-                    
-                        <div class="form-group">
-                    
-                            <label for="trip-notes">
-                                Trip notes
-                            </label>
-                    
-                            <textarea id="trip-notes" name="notes" rows="4" placeholder="Anything you don't want to forget?"></textarea>
-                    
-                        </div>
-                    
-                    
-                        <div class="itinerary-builder"
-                         id="itinerary-builder">
-                    
-                            <div class="itinerary-builder-heading">
-                    
-                                <div>
-                    
-                                    <p class="eyebrow">
-                                        YOUR ITINERARY
-                                    </p>
-                    
-                                    <h3>
-                                        Build your trip day by day
-                                    </h3>
-                    
-                                    <p>
-                                        Choose your dates first. Then add attractions,
-                                        activities, meals, and other plans to each day.
-                                    </p>
-                    
-                                </div>
-                    
-                            </div>
-                    
-                    
-                            <div id="itinerary-container" class="itinerary-container">
-                    
-                                <p class="itinerary-empty">
-                                    Select your start and end dates to build your itinerary.
-                                </p>
-                    
-                            </div>
-                    
-                        </div>
-                    
-                    
-                        <button class="button button-primary" type="submit">
-                            Save My Itinerary
-                        </button>
-                    
-                    
-                        <p id="planner-status" class="search-status" aria-live="polite"></p>
-                    
-                    </form>
-
-                </div>
-
-
-                <aside class="planner-summary-card" aria-labelledby="planner-summary-title">
-
-                    <p class="eyebrow">YOUR NEXT ADVENTURE</p>
-
-                    <h2 id="planner-summary-title">
-                        A plan is better than “one day.”
+        <div class="planner-layout">
+        
+            <!-- LEFT: TRIP PLANNER -->
+            <div class="planner-form-card">
+        
+                <div class="section-heading">
+                    <p class="eyebrow">YOUR TRIP</p>
+        
+                    <h2 id="trip-form-title">
+                        Start planning
                     </h2>
-
+        
                     <p>
-                        Add the details as you figure them out. Your trip
-                        stays saved in this browser so you can come back to it.
+                        You don't need every detail figured out yet.
+                        Start with what you know.
                     </p>
-
-                    <div class="planner-summary-list">
-                    
-                        <div>
-                            <span>Destination</span>
-                            <strong id="summary-destination">
-                                Not chosen yet
-                            </strong>
-                        </div>
-                    
-                        <div>
-                            <span>Dates</span>
-                            <strong id="summary-dates">
-                                Not chosen yet
-                            </strong>
-                        </div>
-                    
-                        <div>
-                            <span>Itinerary</span>
-                            <strong id="summary-itinerary">
-                                No plans added yet
-                            </strong>
-                        </div>
-                    
+                </div>
+        
+        
+                <form id="trip-form">
+        
+                    <div class="form-group">
+        
+                        <label for="trip-destination">
+                            Where are you going?
+                        </label>
+        
+                        <input type="text" id="trip-destination" name="destination" placeholder="Try Paris, Japan, Cape Town..."
+                            autocomplete="off" required>
+        
                     </div>
-
+        
+        
+                    <div class="planner-date-grid">
+        
+                        <div class="form-group">
+        
+                            <label for="trip-start">
+                                Start date
+                            </label>
+        
+                            <input type="date" id="trip-start" name="startDate" required>
+        
+                        </div>
+        
+        
+                        <div class="form-group">
+        
+                            <label for="trip-end">
+                                End date
+                            </label>
+        
+                            <input type="date" id="trip-end" name="endDate" required>
+        
+                        </div>
+        
                     </div>
+        
+        
+                    <div class="form-group">
+        
+                        <label for="trip-notes">
+                            Trip notes
+                        </label>
+        
+                        <textarea id="trip-notes" name="notes" rows="4"
+                            placeholder="Anything you don't want to forget?"></textarea>
+        
+                    </div>
+        
+        
+                    <div class="itinerary-builder" id="itinerary-builder">
+        
+                        <div class="itinerary-builder-heading">
+        
+                            <div>
+        
+                                <p class="eyebrow">
+                                    YOUR ITINERARY
+                                </p>
+        
+                                <h3>
+                                    Build your trip day by day
+                                </h3>
+        
+                                <p>
+                                    Choose your dates first. Then add attractions,
+                                    activities, meals, and other plans to each day.
+                                </p>
+        
+                            </div>
+        
+                        </div>
+        
+        
+                        <div id="itinerary-container" class="itinerary-container">
+        
+                            <p class="itinerary-empty">
+                                Select your start and end dates to build your itinerary.
+                            </p>
+        
+                        </div>
+        
+                    </div>
+        
+        
+                    <button class="button button-primary" type="submit">
+                        Save My Itinerary
+                    </button>
+        
+        
+                    <p id="planner-status" class="search-status" aria-live="polite"></p>
+        
+                </form>
+        
+            </div>
+        
+        
+            <!-- RIGHT: SUMMARY + BUDGET -->
+<div class="planner-sidebar">
 
-                </aside>
+    <!-- YOUR NEXT ADVENTURE -->
+    <aside class="planner-summary-card" aria-labelledby="planner-summary-title">
 
+        <p class="eyebrow">YOUR NEXT ADVENTURE</p>
+
+        <h2 id="planner-summary-title">
+            A plan is better than “one day.”
+        </h2>
+
+        <p>
+            Add the details as you figure them out. Your trip
+            stays saved in this browser so you can come back to it.
+        </p>
+
+        <div class="planner-summary-list">
+
+            <div>
+                <span>Destination</span>
+                <strong id="summary-destination">
+                    Not chosen yet
+                </strong>
             </div>
 
-        </section>
+            <div>
+                <span>Dates</span>
+                <strong id="summary-dates">
+                    Not chosen yet
+                </strong>
+            </div>
 
+            <div>
+                <span>Itinerary</span>
+                <strong id="summary-itinerary">
+                    No plans added yet
+                </strong>
+            </div>
+            <div>
+                <span>Est. budget</span>
+                <strong id="summary-budget">
+                     Not set yet
+                </strong>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- TRIP BUDGET -->
+    <section class="trip-budget-card" aria-labelledby="budget-title">
+
+        <div class="budget-heading">
+
+            <p class="eyebrow">PLAN YOUR SPENDING</p>
+
+            <h2 id="budget-title">
+                Estimate your trip budget.
+            </h2>
+
+            <p>
+                Keep track of your expected travel costs before you set off.
+            </p>
+
+        </div>
+
+
+        <div class="budget-summary">
+
+            <span>ESTIMATED TOTAL</span>
+
+            <strong id="budget-total">
+                NGN 0.00
+            </strong>
+
+        </div>
+
+
+        <div class="budget-field">
+
+            <label for="budget-accommodation">
+                Accommodation
+            </label>
+
+            <input type="number" id="budget-accommodation" name="accommodation" data-budget-field="accommodation"
+                min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+
+        </div>
+
+
+        <div class="budget-field">
+
+            <label for="budget-transportation">
+                Transportation
+            </label>
+
+            <input type="number" id="budget-transportation" name="transportation" data-budget-field="transportation"
+                min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+
+        </div>
+
+
+        <div class="budget-field">
+
+            <label for="budget-food">
+                Food
+            </label>
+
+            <input type="number" id="budget-food" name="food" data-budget-field="food" min="0" step="0.01"
+                inputmode="decimal" placeholder="0.00">
+
+        </div>
+
+
+        <div class="budget-field">
+
+            <label for="budget-activities">
+                Activities
+            </label>
+
+            <input type="number" id="budget-activities" name="activities" data-budget-field="activities" min="0"
+                step="0.01" inputmode="decimal" placeholder="0.00">
+
+        </div>
+
+
+        <div class="budget-field">
+
+            <label for="budget-other">
+                Other expenses
+            </label>
+
+            <input type="number" id="budget-other" name="other" data-budget-field="other" min="0" step="0.01"
+                inputmode="decimal" placeholder="0.00">
+
+        </div>
+
+
+        <div class="budget-field">
+
+            <label for="budget-currency">
+                Currency
+            </label>
+
+            <select
+                id="budget-currency"
+                name="currency"
+                autocomplete="transaction-currency"
+                aria-label="Budget currency"
+                >
+            </select>
+
+        </div>
+
+
+        <p class="budget-helper">
+            Your total updates automatically as you enter your estimated costs.
+        </p>
+
+
+        <div class="budget-actions">
+
+            <button type="button" class="button button-secondary" id="budget-reset">
+                Reset Budget
+            </button>
+
+            <button type="button" class="button button-primary" id="budget-use-trip">
+                Use in Trip
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+        
+        </div>
+
+        </section>
 
         <section class="saved-trip-section" aria-labelledby="saved-trip-title">
 

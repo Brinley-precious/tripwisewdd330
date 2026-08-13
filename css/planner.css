@@ -477,7 +477,6 @@
     bottom: -80px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
-    pointer-events: none;
 }
 
 .planner-summary-card .eyebrow {
@@ -532,21 +531,18 @@
 }
 
 .planner-summary-list span {
-    color: rgba(255, 255, 255, 0.64);
-
+    color: var(--white);
+    opacity: 0.9;
     font-size: 0.68rem;
     font-weight: 800;
-
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
 .planner-summary-list strong {
     color: var(--white);
-
     font-size: 0.94rem;
     line-height: 1.5;
-
     overflow-wrap: anywhere;
 }
 
@@ -716,4 +712,224 @@
 .itinerary-builder button:focus-visible {
     outline: 3px solid rgba(8, 127, 115, 0.25);
     outline-offset: 3px;
+}
+
+/* =========================================================
+   TRIP BUDGET
+========================================================= */
+
+.planner-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+/* ---------------------------------------------------------
+   BUDGET CARD
+--------------------------------------------------------- */
+.trip-budget-card #budget-use-trip {
+    background: var(--background-dark);
+    color: var(--white);
+    border-color: var(--background-dark);
+    font-weight: 900;
+}
+
+.trip-budget-card {
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid rgba(9, 38, 61, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(9, 38, 61, 0.08);
+}
+
+
+/* ---------------------------------------------------------
+   BUDGET HEADING
+--------------------------------------------------------- */
+
+.budget-heading {
+    margin-bottom: 24px;
+}
+
+.budget-heading .eyebrow {
+    margin-bottom: 8px;
+}
+
+.budget-heading h2 {
+    margin: 0 0 10px;
+    color: #09263d;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.55rem;
+    line-height: 1.2;
+}
+
+.budget-heading p:last-child {
+    margin: 0;
+    color: #65727d;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   BUDGET SUMMARY
+--------------------------------------------------------- */
+
+.budget-summary {
+    margin-bottom: 24px;
+    padding: 18px 20px;
+    background: #edf8f6;
+    border: 1px solid rgba(12, 148, 132, 0.12);
+    border-radius: 14px;
+}
+
+.budget-summary span {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--teal-dark);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.budget-summary strong {
+    display: block;
+    color: var(--teal);
+    font-family: "Roboto", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+
+/* ---------------------------------------------------------
+   BUDGET FIELDS
+--------------------------------------------------------- */
+
+.budget-field {
+    margin-bottom: 18px;
+}
+
+.budget-field label {
+    display: block;
+    margin-bottom: 7px;
+    color: #17344a;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.budget-field input,
+.budget-field select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 13px;
+    box-sizing: border-box;
+
+    border: 1px solid #d7e0e5;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #17344a;
+
+    font-family: inherit;
+    font-size: 0.92rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.budget-field input:hover,
+.budget-field select:hover {
+    border-color: #9bb8b5;
+}
+
+.budget-field input:focus,
+.budget-field select:focus {
+    border-color: #0c9484;
+    box-shadow: 0 0 0 3px rgba(12, 148, 132, 0.12);
+}
+
+.budget-field input::placeholder {
+    color: #9aa7af;
+}
+
+
+/* ---------------------------------------------------------
+   BUDGET HELPER TEXT
+--------------------------------------------------------- */
+
+.budget-helper {
+    margin: 4px 0 22px;
+    color: #65727d;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+
+/* ---------------------------------------------------------
+   BUDGET ACTIONS
+--------------------------------------------------------- */
+
+.budget-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.budget-actions .button {
+    flex: 1;
+    min-height: 46px;
+    border-radius: 999px;
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.budget-actions .button:hover {
+    transform: translateY(-1px);
+}
+
+.budget-actions .button:active {
+    transform: translateY(0);
+}
+
+.budget-actions .button:focus-visible {
+    outline: 3px solid rgba(12, 148, 132, 0.2);
+    outline-offset: 3px;
+}
+
+
+/* Reset Budget */
+
+#budget-reset {
+    border: 1px solid #8bc9c0;
+    background: #ffffff;
+    color: #087c70;
+}
+
+#budget-reset:hover {
+    background: #edf8f6;
+}
+
+
+/* Use in Trip */
+
+#budget-use-trip {
+    background: #0c9484;
+    color: #ffffff;
+    box-shadow: 0 7px 16px rgba(12, 148, 132, 0.18);
+}
+
+#budget-use-trip:hover {
+    background: #087c70;
+    box-shadow: 0 9px 20px rgba(12, 148, 132, 0.24);
 }

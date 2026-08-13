@@ -16,19 +16,67 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
+    /* HERO */
+
     .hero {
         min-height: 650px;
-        padding: 70px 30px;
+        padding: 80px 30px;
+        align-items: center;
+    }
+
+    .hero-image {
+        object-position: center center;
+        animation: heroImageDrift 14s ease-in-out infinite alternate;
+    }
+
+    .hero::before {
+        background:
+            linear-gradient(90deg,
+                rgba(8, 34, 56, 0.96) 0%,
+                rgba(8, 34, 56, 0.88) 35%,
+                rgba(8, 34, 56, 0.68) 65%,
+                rgba(8, 34, 56, 0.48) 100%);
+    }
+
+    .hero-overlay {
+        background:
+            radial-gradient(circle at 25% 30%,
+                rgba(8, 34, 56, 0.42),
+                transparent 55%),
+            linear-gradient(180deg,
+                rgba(8, 34, 56, 0.20) 0%,
+                rgba(8, 34, 56, 0.42) 100%);
     }
 
     .hero-content {
-        width: min(100%, 560px);
+        width: min(100%, 720px);
         margin-left: 0;
+        padding: 32px 0 40px;
+        gap: 1.25rem;
     }
 
     .hero h1 {
+        max-width: 700px;
         font-size: clamp(3rem, 8vw, 4.8rem);
+        line-height: 0.98;
     }
+
+    .hero-text {
+        max-width: 650px;
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .hero-actions {
+        width: auto;
+        margin-top: 20px;
+    }
+
+    .hero-actions .button {
+        min-width: 190px;
+    }
+
+    /* SECTIONS */
 
     .featured-section,
     .search-section,
@@ -42,6 +90,7 @@
         padding-bottom: 90px;
     }
 }
+
 
 /* =========================
    MOBILE
@@ -75,6 +124,9 @@
 
         background: var(--background-dark);
         box-shadow: var(--shadow-md);
+
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
     }
 
     .site-navigation.open {
@@ -94,72 +146,91 @@
         display: none;
     }
 
-    .site-navigation {
-        max-height: calc(100vh - 90px);
-        overflow-y: auto;
-    }
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
-        min-height: 520px;
-        padding: 50px 18px 28px;
-        align-items: flex-start;
-        justify-content: flex-start;
+        min-height: 620px;
+        padding: 55px 20px 35px;
+        align-items: center;
+        justify-content: center;
     }
 
     .hero-image {
         object-position: center center;
+        animation: heroImageDrift 12s ease-in-out infinite alternate;
     }
 
     .hero::before {
         background:
             linear-gradient(180deg,
-                rgba(5, 20, 32, 0.28) 0%,
-                rgba(5, 20, 32, 0.20) 36%,
-                rgba(5, 20, 32, 0.14) 72%,
-                rgba(5, 20, 32, 0.06) 100%);
+                rgba(8, 34, 56, 0.90) 0%,
+                rgba(8, 34, 56, 0.82) 35%,
+                rgba(8, 34, 56, 0.72) 68%,
+                rgba(8, 34, 56, 0.64) 100%);
+    }
+
+    .hero-overlay {
+        background:
+            radial-gradient(circle at 50% 20%,
+                rgba(8, 34, 56, 0.30),
+                transparent 60%),
+            linear-gradient(180deg,
+                rgba(8, 34, 56, 0.18) 0%,
+                rgba(8, 34, 56, 0.38) 100%);
     }
 
     .hero-content {
         width: 100%;
-        padding: 0;
-        border-radius: 0;
-        background: transparent;
-        backdrop-filter: none;
-        font-size: clamp(2.2rem, 11vw, 3.4rem);
-        line-height: 1.05;
-        display: flex;
-        flex-direction: column;
-        gap: 0.9rem;
+        max-width: 560px;
+        padding: 20px 0 28px;
+        gap: 1rem;
         align-items: flex-start;
         text-align: left;
+        text-shadow: none;
     }
 
     .hero h1 {
-        font-size: clamp(2.5rem, 9vw, 3.6rem);
-        line-height: 1.05;
+        max-width: 520px;
+        margin-bottom: 0;
+        font-size: clamp(2.6rem, 10vw, 3.7rem);
+        line-height: 0.98;
+        letter-spacing: -0.045em;
     }
 
     .hero-text {
-        max-width: 100%;
+        max-width: 520px;
+        margin-top: 0.35rem;
         font-size: 0.98rem;
         line-height: 1.7;
     }
 
     .hero-actions {
-        align-items: center;
-        flex-direction: row;
-        justify-content: flex-start;
         width: 100%;
+        margin-top: 18px;
+        flex-direction: column;
+        align-items: stretch;
         gap: 12px;
     }
 
     .hero-actions .button {
         width: 100%;
+        min-width: 0;
+        min-height: 52px;
     }
 
-    /* SECTIONS */
+    .button-secondary {
+        background: rgba(8, 34, 56, 0.94);
+        border-color: var(--white);
+        color: var(--white);
+    }
+
+
+    /* =========================
+       SECTIONS
+    ========================= */
 
     .search-section,
     .featured-section,
@@ -175,7 +246,10 @@
         font-size: clamp(2rem, 9vw, 2.8rem);
     }
 
-    /* SEARCH */
+
+    /* =========================
+       SEARCH
+    ========================= */
 
     .search-form {
         align-items: stretch;
@@ -186,7 +260,10 @@
         width: 100%;
     }
 
-    /* CARDS */
+
+    /* =========================
+       CARDS
+    ========================= */
 
     .destination-grid,
     .feature-grid {
@@ -207,7 +284,10 @@
         padding: 24px 18px;
     }
 
-    /* CTA */
+
+    /* =========================
+       CTA
+    ========================= */
 
     .cta-section {
         padding: 80px 20px;
@@ -217,37 +297,10 @@
         font-size: clamp(2.4rem, 10vw, 3.5rem);
     }
 
-    /* DESTINATION PAGE */
 
-    .destination-details-section {
-        padding: 40px 20px 60px;
-    }
-
-    .destination-hero {
-        grid-template-columns: 1fr;
-        gap: 24px;
-        padding: 24px;
-    }
-
-    .destination-hero-content {
-        width: 100%;
-    }
-
-    .destination-hero-content h2 {
-        font-size: clamp(2rem, 7vw, 2.6rem);
-    }
-
-    .country-facts-grid,
-    .places-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .country-fact-card,
-    .destination-placeholder-card {
-        padding: 20px;
-    }
-
-    /* FOOTER */
+    /* =========================
+       FOOTER
+    ========================= */
 
     .footer-content {
         flex-direction: column;
@@ -259,6 +312,75 @@
         flex-wrap: wrap;
         gap: 12px 22px;
     }
+}
+
+
+/* =========================
+   HERO IMAGE ANIMATION
+========================= */
+
+@keyframes heroImageDrift {
+
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.06);
+    }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-image {
+        animation: none;
+    }
+}
+
+/* DESTINATION PAGE */
+@media (max-width: 900px) {
+    .places-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .place-card-content {
+        padding: 24px 22px 22px;
+    }
+
+
+.destination-details-section {
+    padding: 40px 20px 60px;
+}
+
+.destination-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+}
+
+.destination-hero-content {
+    width: 100%;
+}
+
+.destination-hero-content h2 {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+}
+
+.country-facts-grid,
+.places-grid {
+    grid-template-columns: 1fr;
+}
+
+.country-fact-card,
+.destination-placeholder-card {
+    padding: 20px;
+   }
 }
 
 /* =========================================
@@ -365,7 +487,7 @@
 
    }
 
-   /* =========================================
+/* =========================================
    FAVOURITES RESPONSIVE LAYOUT
 ========================================= */
 
@@ -480,6 +602,536 @@
 
     .favourite-card-content {
         padding: 24px;
+    }
+
+}
+
+/* =========================================================
+   TRIP BUDGET — MOBILE
+   Breakpoint: 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .planner-sidebar {
+        gap: 18px;
+    }
+
+    .trip-budget-card {
+        padding: 24px 20px;
+        border-radius: 18px;
+    }
+
+    .budget-heading {
+        margin-bottom: 22px;
+    }
+
+    .budget-heading h2 {
+        font-size: 1.4rem;
+    }
+
+    .budget-summary {
+        padding: 16px 18px;
+    }
+
+    .budget-summary strong {
+        font-size: 1.6rem;
+    }
+
+    .budget-field {
+        margin-bottom: 16px;
+    }
+
+    .budget-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .budget-actions .button {
+        width: 100%;
+    }
+}
+
+/* =====================================================
+   TABLET
+   768px - 900px
+===================================================== */
+
+@media (max-width: 900px) {
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header-container {
+        width: min(100% - 32px, var(--max-width));
+    }
+
+    .site-navigation {
+        gap: 20px;
+    }
+
+
+    /* =========================
+       ABOUT HERO
+    ========================= */
+
+    .about-hero {
+        min-height: 600px;
+    }
+
+    .about-hero-overlay {
+        background:
+            linear-gradient(90deg,
+                var(--background-light) 0%,
+                var(--background-light) 38%,
+                rgba(255, 255, 255, 0.82) 53%,
+                rgba(255, 255, 255, 0.28) 76%,
+                transparent 100%);
+    }
+
+    .about-hero-content {
+        width: min(100% - 32px, var(--max-width));
+        padding: 75px 0;
+    }
+
+    .about-hero-content h1 {
+        max-width: 580px;
+        font-size: clamp(3.3rem, 7vw, 5rem);
+    }
+
+
+    /* =========================
+       ABOUT STORY
+    ========================= */
+
+    .about-story {
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+    }
+
+    .about-story-content h2 {
+        font-size: clamp(2.3rem, 4.5vw, 3.3rem);
+    }
+
+
+    /* =========================
+       PRINCIPLES
+    ========================= */
+
+    .about-principles {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+/* =====================================================
+       ABOUT EXPERIENCE
+       TABLET
+===================================================== */
+    
+        .about-experience {
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+        }
+    
+        .about-experience-content {
+            grid-column: 1;
+        }
+    
+        .about-experience-card {
+            grid-column: 2;
+            grid-row: 1;
+        }
+    
+        .about-experience-list {
+            grid-column: 1 / -1;
+    
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0 30px;
+        }
+    
+        .about-experience-list-item {
+            min-height: 68px;
+        }
+    
+        .about-experience-content h2 {
+            font-size: clamp(2.7rem, 5vw, 3.8rem);
+        }
+    
+        .about-experience-card {
+            min-height: 380px;
+            padding: 36px 32px;
+        }
+
+
+    /* =========================
+       FOUNDER
+    ========================= */
+
+    .about-founder {
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+    }
+
+    .about-founder-content h2 {
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+    }
+
+}
+
+
+
+/* =====================================================
+   MOBILE
+   768px AND BELOW
+===================================================== */
+
+@media (max-width: 768px) {
+
+
+    /* =========================
+       GLOBAL HEADER
+    ========================= */
+
+    .header-container {
+        width: min(100% - 32px, var(--max-width));
+        min-height: 64px;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .site-navigation {
+        position: absolute;
+        top: 100%;
+        right: 16px;
+        left: 16px;
+
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+
+        padding: 10px;
+
+        border-radius: 12px;
+
+        background: var(--background-dark);
+        box-shadow: var(--shadow-md);
+    }
+
+    .site-navigation.is-open {
+        display: flex;
+    }
+
+    .site-navigation a {
+        padding: 14px 12px;
+        border-radius: 8px;
+    }
+
+    .site-navigation a:hover {
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .site-navigation a::after {
+        display: none;
+    }
+
+
+    /* =========================
+       ABOUT HERO
+    ========================= */
+
+    .about-hero {
+        min-height: 680px;
+        align-items: flex-end;
+    }
+
+    .about-hero-image {
+        object-position: center;
+    }
+
+    .about-hero-overlay {
+        background:
+            linear-gradient(180deg,
+                rgba(8, 34, 56, 0.02) 0%,
+                rgba(8, 34, 56, 0.16) 25%,
+                rgba(8, 34, 56, 0.82) 65%,
+                var(--background-dark) 100%);
+    }
+
+    .about-hero-content {
+        width: min(100% - 32px, var(--max-width));
+        padding: 60px 0 42px;
+
+        color: var(--text-light);
+    }
+
+    .about-hero-content .eyebrow {
+        color: var(--primary);
+    }
+
+    .about-hero-content h1 {
+        max-width: 100%;
+        margin-bottom: 20px;
+
+        font-size: clamp(3rem, 13vw, 4.2rem);
+        line-height: 0.94;
+    }
+
+    .about-hero-lead {
+        max-width: 100%;
+
+        color: var(--text-light);
+
+        font-size: 0.94rem;
+        line-height: 1.7;
+    }
+
+
+    /* =========================
+       ABOUT STORY
+    ========================= */
+
+    .about-story-section {
+        padding: 75px 16px;
+    }
+
+    .about-story {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+        .about-story-image {
+            width: min(100%, 400px);
+        }
+    
+        .about-story-image img {
+            aspect-ratio: 500 / 533;
+            height: auto;
+        }
+
+    .about-story-content h2 {
+        font-size: clamp(2.5rem, 11vw, 3.5rem);
+    }
+
+
+    /* =========================
+       ABOUT BELIEFS
+    ========================= */
+
+    .about-belief-section {
+        padding: 75px 16px;
+    }
+
+    .about-belief-section .section-heading {
+        margin-bottom: 40px;
+    }
+
+    .about-principles {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .about-principle {
+        min-height: auto;
+        padding: 26px 22px;
+    }
+
+
+/* =====================================================
+   ABOUT EXPERIENCE
+   MOBILE
+===================================================== */
+
+.about-experience-section {
+    padding: 80px 16px;
+}
+
+.about-experience {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+}
+
+.about-experience-content {
+    width: 100%;
+    text-align: left;
+}
+
+.about-experience-content .eyebrow {
+    margin-bottom: 20px;
+}
+
+.about-experience-content h2 {
+    max-width: 100%;
+
+    font-size: clamp(2.7rem, 12vw, 4rem);
+    line-height: 0.94;
+}
+
+.about-experience-content>p {
+    max-width: 100%;
+    margin-top: 22px;
+}
+
+
+/* CARD */
+
+.about-experience-card {
+    width: min(100%, 430px);
+    min-height: auto;
+    margin: 0 auto;
+
+    padding: 34px 28px;
+
+    border-radius: 24px;
+}
+
+.about-experience-card h3 {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+}
+
+.about-experience-card p {
+    margin-top: 20px;
+}
+
+.about-experience-card .button {
+    width: 100%;
+    margin-top: 26px;
+}
+
+
+/* BENEFITS */
+
+.about-experience-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.about-experience-list-item {
+    grid-template-columns: 40px minmax(0, 1fr);
+    min-height: 64px;
+    padding: 14px 0;
+}
+
+.about-experience-list-icon {
+    width: 38px;
+    height: 38px;
+}
+
+.about-experience-list-item p {
+    font-size: 0.82rem;
+}
+
+
+    /* =========================
+       ABOUT FOUNDER
+    ========================= */
+
+    .about-founder-section {
+        padding: 80px 16px;
+    }
+
+    .about-founder {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-founder-content {
+        order: 1;
+    }
+
+    .about-founder-visual {
+        order: 2;
+    }
+
+    .about-founder-content h2 {
+        font-size: clamp(2.5rem, 11vw, 3.6rem);
+    }
+
+    .about-founder-frame {
+         width: min(100%, 400px);
+    }
+    
+    .about-founder-frame img {
+        aspect-ratio: 400 / 550;
+        height: auto;
+    }
+
+
+    /* =========================
+       ABOUT CTA
+    ========================= */
+
+    .about-cta-section {
+        padding: 80px 16px;
+    }
+
+    .about-cta-content h2 {
+        font-size: clamp(2.8rem, 12vw, 4rem);
+    }
+
+    .about-cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .about-cta-actions .button {
+        width: 100%;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer-content {
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 16px 22px;
+    }
+
+}
+
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .hero-image,
+    .about-hero-image {
+        animation: none;
+        transform: none;
+    }
+
+    .about-story,
+    .about-principle,
+    .about-experience,
+    .about-founder {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .about-principle {
+        transition: none;
     }
 
 }
