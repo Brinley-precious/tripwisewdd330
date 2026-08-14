@@ -228,6 +228,7 @@ main {
     background: transparent;
 }
 
+
 .button-secondary:hover {
     background: var(--text);
     color: var(--white);
@@ -574,7 +575,16 @@ main {
     width: 100%;
 }
 
+.destination-card .button-secondary {
+    background: var(--background-dark);
+    color: var(--white);
+    border-color: var(--background-dark);
+}
 
+.destination-card .button-secondary:hover {
+    background: var(--primary);
+    color: var(--text);
+}
 /* =========================
    FEATURES
 ========================= */
