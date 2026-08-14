@@ -652,53 +652,75 @@
     }
 }
 
+
 /* =====================================================
-   TABLET
-   768px - 900px
+   ABOUT PAGE — TABLET
+   Maximum width: 900px
 ===================================================== */
 
 @media (max-width: 900px) {
-
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    .header-container {
-        width: min(100% - 32px, var(--max-width));
-    }
-
-    .site-navigation {
-        gap: 20px;
-    }
-
 
     /* =========================
        ABOUT HERO
     ========================= */
 
     .about-hero {
-        min-height: 600px;
+        min-height: 620px;
+        align-items: flex-end;
     }
 
+    .about-hero-image {
+        object-position: center center;
+    }
+
+    /*
+       Keep the same visual treatment as desktop.
+       The previous responsive version introduced a
+       strong white gradient which caused the hero
+       colors and contrast to change.
+    */
     .about-hero-overlay {
         background:
-            linear-gradient(90deg,
-                var(--background-light) 0%,
-                var(--background-light) 38%,
-                rgba(255, 255, 255, 0.82) 53%,
-                rgba(255, 255, 255, 0.28) 76%,
-                transparent 100%);
+            linear-gradient(180deg,
+                rgba(8, 25, 40, 0.02) 0%,
+                rgba(8, 25, 40, 0.08) 45%,
+                rgba(8, 25, 40, 0.24) 75%,
+                rgba(8, 25, 40, 0.42) 100%);
     }
 
     .about-hero-content {
-        width: min(100% - 32px, var(--max-width));
-        padding: 75px 0;
+        width: min(calc(100% - 32px),
+                var(--max-width));
+
+        padding: 60px 0 42px;
+        color: var(--white);
+    }
+
+    .about-hero-content .eyebrow {
+        color: var(--primary);
     }
 
     .about-hero-content h1 {
-        max-width: 580px;
-        font-size: clamp(3.3rem, 7vw, 5rem);
+        max-width: 560px;
+
+        margin-bottom: 20px;
+
+        font-size: clamp(2.7rem,
+                7vw,
+                4.2rem);
+
+        line-height: 0.96;
+
+        color: var(--white);
+    }
+
+    .about-hero-lead {
+        max-width: 600px;
+
+        color: var(--white);
+
+        font-size: 0.94rem;
+        line-height: 1.65;
     }
 
 
@@ -706,140 +728,153 @@
        ABOUT STORY
     ========================= */
 
-    .about-story {
-        grid-template-columns: 1fr 1fr;
-        gap: 45px;
+    .about-story-section {
+        padding: 85px 20px;
     }
 
-    .about-story-content h2 {
-        font-size: clamp(2.3rem, 4.5vw, 3.3rem);
+    .about-story {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .about-story-image {
+        width: min(100%,
+                500px);
+    }
+
+    .about-story-content {
+        max-width: 700px;
     }
 
 
     /* =========================
-       PRINCIPLES
+       ABOUT BELIEFS
     ========================= */
+
+    .about-belief-section {
+        padding: 85px 20px;
+    }
 
     .about-principles {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 16px;
+    }
+
+    .about-principle {
+        min-height: 220px;
     }
 
 
-/* =====================================================
+    /* =========================
        ABOUT EXPERIENCE
-       TABLET
-===================================================== */
-    
-        .about-experience {
-            grid-template-columns: 1fr 1fr;
-            gap: 45px;
-        }
-    
-        .about-experience-content {
-            grid-column: 1;
-        }
-    
-        .about-experience-card {
-            grid-column: 2;
-            grid-row: 1;
-        }
-    
-        .about-experience-list {
-            grid-column: 1 / -1;
-    
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0 30px;
-        }
-    
-        .about-experience-list-item {
-            min-height: 68px;
-        }
-    
-        .about-experience-content h2 {
-            font-size: clamp(2.7rem, 5vw, 3.8rem);
-        }
-    
-        .about-experience-card {
-            min-height: 380px;
-            padding: 36px 32px;
-        }
+    ========================= */
+
+    .about-experience-section {
+        padding: 95px 20px;
+    }
+
+    .about-experience {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .about-experience-content {
+        max-width: 700px;
+    }
+
+    .about-experience-content h2 {
+        max-width: 520px;
+
+        font-size: clamp(2.3rem,
+                5.5vw,
+                3.4rem);
+
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+    }
+
+    .about-experience-content>p {
+        max-width: 600px;
+    }
+
+    .about-experience-card {
+        width: min(100%,
+                520px);
+
+        margin: 0 auto;
+    }
+
+    .about-experience-list {
+        width: min(100%,
+                650px);
+
+        margin: 0 auto;
+    }
 
 
     /* =========================
-       FOUNDER
+       ABOUT FOUNDER
     ========================= */
 
+    .about-founder-section {
+        padding: 80px 16px;
+    }
+
     .about-founder {
-        grid-template-columns: 1fr 1fr;
-        gap: 45px;
+        grid-template-columns: 1fr;
+        gap: 44px;
+    }
+
+    .about-founder-content {
+        order: 1;
+        max-width: 100%;
+    }
+
+    .about-founder-visual {
+        order: 2;
+        width: 100%;
     }
 
     .about-founder-content h2 {
-        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        font-size: clamp(2.3rem,
+                7vw,
+                3.4rem);
+
+        line-height: 1.02;
+    }
+
+    .about-founder-frame {
+        width: min(100%,
+                400px);
+    }
+
+    .about-founder-frame img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: contain;
+    }
+
+
+    /* =========================
+       ABOUT CTA
+    ========================= */
+
+    .about-cta-section {
+        padding: 90px 20px;
     }
 
 }
 
 
-
 /* =====================================================
-   MOBILE
-   768px AND BELOW
+   ABOUT PAGE — MOBILE
+   Maximum width: 768px
 ===================================================== */
 
 @media (max-width: 768px) {
-
-
-    /* =========================
-       GLOBAL HEADER
-    ========================= */
-
-    .header-container {
-        width: min(100% - 32px, var(--max-width));
-        min-height: 64px;
-    }
-
-    .menu-button {
-        display: block;
-    }
-
-    .site-navigation {
-        position: absolute;
-        top: 100%;
-        right: 16px;
-        left: 16px;
-
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-
-        padding: 10px;
-
-        border-radius: 12px;
-
-        background: var(--background-dark);
-        box-shadow: var(--shadow-md);
-    }
-
-    .site-navigation.is-open {
-        display: flex;
-    }
-
-    .site-navigation a {
-        padding: 14px 12px;
-        border-radius: 8px;
-    }
-
-    .site-navigation a:hover {
-        background: rgba(255, 255, 255, 0.06);
-    }
-
-    .site-navigation a::after {
-        display: none;
-    }
-
 
     /* =========================
        ABOUT HERO
@@ -851,23 +886,33 @@
     }
 
     .about-hero-image {
-        object-position: center;
+        object-position: center center;
     }
 
+    /*
+       IMPORTANT:
+       Do not introduce a different mobile gradient.
+       Keep the mobile hero visually consistent with
+       the tablet/desktop treatment.
+
+       This is intentionally subtle so the image remains
+       visible while the white hero text stays readable.
+    */
     .about-hero-overlay {
         background:
             linear-gradient(180deg,
-                rgba(8, 34, 56, 0.02) 0%,
-                rgba(8, 34, 56, 0.16) 25%,
-                rgba(8, 34, 56, 0.82) 65%,
-                var(--background-dark) 100%);
+                rgba(8, 25, 40, 0.02) 0%,
+                rgba(8, 25, 40, 0.06) 42%,
+                rgba(8, 25, 40, 0.20) 72%,
+                rgba(8, 25, 40, 0.40) 100%);
     }
 
     .about-hero-content {
-        width: min(100% - 32px, var(--max-width));
-        padding: 60px 0 42px;
+        width: calc(100% - 32px);
 
-        color: var(--text-light);
+        padding: 55px 0 38px;
+
+        color: var(--white);
     }
 
     .about-hero-content .eyebrow {
@@ -875,20 +920,21 @@
     }
 
     .about-hero-content h1 {
-        max-width: 100%;
-        margin-bottom: 20px;
+        max-width: 430px;
 
-        font-size: clamp(3rem, 13vw, 4.2rem);
-        line-height: 0.94;
+        font-size: clamp(2.7rem,
+                11vw,
+                4rem);
+
+        line-height: 0.96;
+        letter-spacing: -0.035em;
     }
 
     .about-hero-lead {
         max-width: 100%;
 
-        color: var(--text-light);
-
-        font-size: 0.94rem;
-        line-height: 1.7;
+        font-size: 0.92rem;
+        line-height: 1.65;
     }
 
 
@@ -902,20 +948,23 @@
 
     .about-story {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 42px;
     }
 
-        .about-story-image {
-            width: min(100%, 400px);
-        }
-    
-        .about-story-image img {
-            aspect-ratio: 500 / 533;
-            height: auto;
-        }
+    .about-story-image {
+        width: 100%;
+        max-width: 400px;
+    }
 
     .about-story-content h2 {
-        font-size: clamp(2.5rem, 11vw, 3.5rem);
+        max-width: 500px;
+
+        font-size: clamp(2.2rem,
+                9vw,
+                3.2rem);
+
+        line-height: 1.02;
+        letter-spacing: -0.035em;
     }
 
 
@@ -942,92 +991,112 @@
     }
 
 
-/* =====================================================
-   ABOUT EXPERIENCE
-   MOBILE
-===================================================== */
+    /* =========================
+       ABOUT EXPERIENCE
+    ========================= */
 
-.about-experience-section {
-    padding: 80px 16px;
-}
+    .about-experience-section {
+        padding: 80px 16px;
+    }
 
-.about-experience {
-    display: flex;
-    flex-direction: column;
-    gap: 42px;
-}
+    .about-experience {
+        display: flex;
+        flex-direction: column;
+        gap: 42px;
+    }
 
-.about-experience-content {
-    width: 100%;
-    text-align: left;
-}
+    .about-experience-content {
+        width: 100%;
+        text-align: left;
+    }
 
-.about-experience-content .eyebrow {
-    margin-bottom: 20px;
-}
+    .about-experience-content .eyebrow {
+        margin-bottom: 18px;
+    }
 
-.about-experience-content h2 {
-    max-width: 100%;
+    .about-experience-content h2 {
+        max-width: 480px;
 
-    font-size: clamp(2.7rem, 12vw, 4rem);
-    line-height: 0.94;
-}
+        font-size: clamp(2.2rem,
+                9vw,
+                3.2rem);
 
-.about-experience-content>p {
-    max-width: 100%;
-    margin-top: 22px;
-}
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+    }
 
-
-/* CARD */
-
-.about-experience-card {
-    width: min(100%, 430px);
-    min-height: auto;
-    margin: 0 auto;
-
-    padding: 34px 28px;
-
-    border-radius: 24px;
-}
-
-.about-experience-card h3 {
-    font-size: clamp(2rem, 9vw, 2.7rem);
-}
-
-.about-experience-card p {
-    margin-top: 20px;
-}
-
-.about-experience-card .button {
-    width: 100%;
-    margin-top: 26px;
-}
+    .about-experience-content>p {
+        max-width: 100%;
+        margin-top: 22px;
+    }
 
 
-/* BENEFITS */
+    /* =========================
+       ABOUT EXPERIENCE CARD
+    ========================= */
 
-.about-experience-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
+    .about-experience-card {
+        width: 100%;
 
-.about-experience-list-item {
-    grid-template-columns: 40px minmax(0, 1fr);
-    min-height: 64px;
-    padding: 14px 0;
-}
+        max-width: 430px;
 
-.about-experience-list-icon {
-    width: 38px;
-    height: 38px;
-}
+        min-height: auto;
 
-.about-experience-list-item p {
-    font-size: 0.82rem;
-}
+        margin: 0 auto;
+
+        padding: 34px 28px;
+
+        border-radius: 24px;
+    }
+
+    .about-experience-card h3 {
+        font-size: clamp(1.9rem,
+                8vw,
+                2.5rem);
+
+        line-height: 1.05;
+    }
+
+    .about-experience-card p {
+        margin-top: 20px;
+    }
+
+    .about-experience-card .button {
+        width: 100%;
+        margin-top: 26px;
+    }
+
+
+    /* =========================
+       ABOUT EXPERIENCE BENEFITS
+    ========================= */
+
+    .about-experience-list {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    .about-experience-list-item {
+        grid-template-columns:
+            40px minmax(0, 1fr);
+
+        min-height: 64px;
+
+        padding: 14px 0;
+    }
+
+    .about-experience-list-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .about-experience-list-item p {
+        font-size: 0.82rem;
+    }
 
 
     /* =========================
@@ -1039,29 +1108,34 @@
     }
 
     .about-founder {
-        grid-template-columns: 1fr;
-        gap: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 42px;
     }
 
     .about-founder-content {
         order: 1;
+        width: 100%;
     }
 
     .about-founder-visual {
         order: 2;
+        width: 100%;
     }
 
     .about-founder-content h2 {
-        font-size: clamp(2.5rem, 11vw, 3.6rem);
+        max-width: 480px;
+
+        font-size: clamp(2.2rem,
+                9vw,
+                3.2rem);
+
+        line-height: 1.02;
     }
 
     .about-founder-frame {
-         width: min(100%, 400px);
-    }
-    
-    .about-founder-frame img {
-        aspect-ratio: 400 / 550;
-        height: auto;
+        width: 100%;
+        max-width: 400px;
     }
 
 
@@ -1074,7 +1148,13 @@
     }
 
     .about-cta-content h2 {
-        font-size: clamp(2.8rem, 12vw, 4rem);
+        max-width: 520px;
+
+        font-size: clamp(2.3rem,
+                9vw,
+                3.4rem);
+
+        line-height: 1.02;
     }
 
     .about-cta-actions {
@@ -1102,7 +1182,6 @@
     }
 
 }
-
 
 
 /* =====================================================

@@ -4,7 +4,9 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="description"
         content="Discover the story behind TripWise and how we make travel planning simpler, smarter and more enjoyable.">
 
@@ -16,24 +18,21 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Roboto:wght@400;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Roboto:wght@400;700;800&display=swap"
         rel="stylesheet">
 
 
     <!-- Global styles -->
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- About page JavaScript -->
     <script type="module" src="./scripts/about.js"></script>
 
 </head>
 
-
 <body>
-
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
 
     <header class="site-header">
 
@@ -86,10 +85,7 @@
 
     </header>
 
-
-
     <main>
-
 
         <!-- =====================================================
              ABOUT HERO
@@ -100,13 +96,18 @@
             <div class="about-hero-image-wrapper">
 
                 <picture>
-                    <!-- Mobile / small hero -->
-                    <source media="(max-width: 768px)" srcset="./images/About-hero-small.webp">
-                
-                    <!-- Desktop / large hero -->
-                    <img src="./images/About-hero-large.webp" alt="Hot air balloons floating over a scenic travel destination"
-                        class="about-hero-image" width="1920" height="1080" fetchpriority="high">
+
+                    <!-- Mobile -->
+                    <source media="(max-width: 768px)" srcset="./images/about-hero-small.webp">
+
+
+                    <!-- Desktop -->
+                    <img src="./images/about-hero-large.webp"
+                        alt="Hot air balloons floating over a scenic travel destination" class="about-hero-image"
+                        width="1920" height="1080" fetchpriority="high">
+
                 </picture>
+
             </div>
 
 
@@ -149,8 +150,6 @@
 
         </section>
 
-
-
         <!-- =====================================================
              OUR STORY
         ====================================================== -->
@@ -160,8 +159,10 @@
             <div class="about-story">
 
                 <div class="about-story-image">
-                    <img src="./images/about-story.webp" alt="Traveller looking at a map beside a scenic lake"
-                        class="about-story-image-content" width="400" height="533" loading="lazy" decoding="async">
+
+                    <img src="./images/about-story.webp" alt="Traveller looking at a scenic travel destination"
+                        class="about-story-image-content" width="400" height="550" loading="lazy" decoding="async">
+
                 </div>
 
 
@@ -229,8 +230,6 @@
             </div>
 
         </section>
-
-
 
         <!-- =====================================================
              WHY TRIPWISE
@@ -344,86 +343,133 @@
 
         </section>
 
-
-
         <!-- =====================================================
              MORE THAN A DESTINATION
         ====================================================== -->
 
-        <section class="about-experience-section">
-        
+        <section class="about-experience-section" aria-labelledby="about-experience-title">
+
             <div class="about-experience">
-        
+
+
                 <!-- LEFT -->
+
                 <div class="about-experience-content">
-        
-                    <p class="eyebrow">More than a destination</p>
-        
-                    <h2>
-                        From <span>“that looks amazing”</span>
-                        to “when are we leaving?”
-                    </h2>
-        
-                    <p>
-                        TripWise brings the important pieces of your journey
-                        into one place.
+
+                    <p class="eyebrow">
+                        More than a destination
                     </p>
-        
+
+
+                    <h2 id="about-experience-title">
+
+                        From
+                        <span>“that looks amazing”</span>
+                        to “when are we leaving?”
+
+                    </h2>
+
+
+                    <p>
+                        TripWise brings the important pieces
+                        of your journey into one place.
+                    </p>
+
                 </div>
-        
-        
+
+
+
                 <!-- CENTER -->
+
                 <div class="about-experience-card">
-        
-                    <p class="eyebrow">Your next adventure</p>
-        
+
+                    <p class="eyebrow">
+                        Your next adventure
+                    </p>
+
+
                     <h3>
                         Start somewhere
                         worth going.
                     </h3>
-        
+
+
                     <p>
-                        Discover somewhere new. Save it. Explore it.
+                        Discover somewhere new.
+                        Save it. Explore it.
                         Then make it real.
                     </p>
-        
-                    <a href="destinations.html" class="button button-primary">
+
+
+                    <a href="./destinations.html" class="button button-primary">
                         Explore Destinations
                     </a>
-        
+
                 </div>
-        
-        
+
+
+
                 <!-- RIGHT -->
+
                 <div class="about-experience-list">
-        
+
+
                     <div class="about-experience-list-item">
-                        <span class="about-experience-list-icon">✓</span>
-                        <p>Explore destinations</p>
+
+                        <span class="about-experience-list-icon" aria-hidden="true">
+                            ✓
+                        </span>
+
+                        <p>
+                            Explore destinations
+                        </p>
+
                     </div>
-        
+
+
                     <div class="about-experience-list-item">
-                        <span class="about-experience-list-icon">✓</span>
-                        <p>Discover places worth visiting</p>
+
+                        <span class="about-experience-list-icon" aria-hidden="true">
+                            ✓
+                        </span>
+
+                        <p>
+                            Discover places worth visiting
+                        </p>
+
                     </div>
-        
+
+
                     <div class="about-experience-list-item">
-                        <span class="about-experience-list-icon">✓</span>
-                        <p>Check destination information</p>
+
+                        <span class="about-experience-list-icon" aria-hidden="true">
+                            ✓
+                        </span>
+
+                        <p>
+                            Check destination information
+                        </p>
+
                     </div>
-        
+
+
                     <div class="about-experience-list-item">
-                        <span class="about-experience-list-icon">✓</span>
-                        <p>Save your favourite destinations</p>
+
+                        <span class="about-experience-list-icon" aria-hidden="true">
+                            ✓
+                        </span>
+
+                        <p>
+                            Save your favourite destinations
+                        </p>
+
                     </div>
-        
+
                 </div>
-        
+
             </div>
-        
+
         </section>
-
-
 
         <!-- =====================================================
              FOUNDER / HUMAN STORY
@@ -431,67 +477,61 @@
 
         <section class="about-founder-section" aria-labelledby="about-founder-title">
 
-            <div class="about-founder">
-
-                <div class="about-founder-content">
-
-                    <p class="eyebrow">
-                        THE PERSON BEHIND TRIPWISE
-                    </p>
-
-
-                    <h2 id="about-founder-title">
-
-                        I didn't want to build
-                        <span>another travel website.</span>
-
-                    </h2>
-
-
-                    <p>
-                        I wanted to build something that made
-                        the moment between
-                        <em>“I want to go there”</em>
-                        and
-                        <em>“I'm actually going”</em>
-                        feel a whole lot easier.
-                    </p>
-
-
-                    <p>
-                        TripWise is the result of that idea:
-                        a place where travel inspiration can
-                        become something real.
-                    </p>
-
-
-                    <p>
-                        Because the best part of planning a
-                        trip shouldn't be figuring out where
-                        you saved the information.
-                    </p>
-
-
-                    <p class="about-founder-signoff">
-                        It should be imagining yourself there.
-                    </p>
-
+        <div class="about-founder">
+        
+            <div class="about-founder-content">
+        
+                <p class="eyebrow">
+                    THE PERSON BEHIND TRIPWISE
+                </p>
+        
+                <h2 id="about-founder-title">
+                    I didn't want to build
+                    <span>another travel website.</span>
+                </h2>
+        
+                <p>
+                    I wanted to build something that made
+                    the moment between
+                    <em>“I want to go there”</em>
+                    and
+                    <em>“I'm actually going”</em>
+                    feel a whole lot easier.
+                </p>
+        
+                <p>
+                    TripWise is the result of that idea:
+                    a place where travel inspiration can
+                    become something real.
+                </p>
+        
+                <p>
+                    Because the best part of planning a
+                    trip shouldn't be figuring out where
+                    you saved the information.
+                </p>
+        
+                <p class="about-founder-signoff">
+                    It should be imagining yourself there.
+                </p>
+        
+            </div>
+        
+        
+            <div class="about-founder-visual">
+        
+                <div class="about-founder-frame">
+        
+                    <img src="./images/about-founder.webp" alt="Traveller overlooking a mountain landscape"
+                        class="about-founder-image" width="400" height="550" loading="lazy" decoding="async">
+        
                 </div>
-                
-          </div>
-
-                <div class="about-founder-visual">
-
-                    <div class="about-founder-frame">
-                        <img src="./images/about-founder.webp" alt="Traveller overlooking a mountain landscape" class="about-founder-image"
-                            width="400" height="550" loading="lazy" decoding="async">
-                    </div>
-                    
-                  </div>
+        
+            </div>
+        
+        </div>
 
         </section>
-
-
 
         <!-- =====================================================
              CLOSING CTA
@@ -531,7 +571,7 @@
                     </a>
 
 
-                    <a href="./destinations.html" class="button button-secondary" id="about-destinations-button">
+                    <a href="./destination.html" class="button button-secondary" id="about-destinations-button">
                         Give Me Somewhere to Go
                     </a>
 
@@ -542,12 +582,6 @@
         </section>
 
     </main>
-
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
 
     <footer class="site-footer">
 
@@ -583,7 +617,7 @@
                     Plan a Trip
                 </a>
 
-                <a href="./destinations.html">
+                <a href="./destination.html">
                     Destinations
                 </a>
 

@@ -37,15 +37,11 @@ function setupAboutAnimations() {
     }
 
 
-    if (
-        !("IntersectionObserver" in window)
-    ) {
+    if (!("IntersectionObserver" in window)) {
 
         elements.forEach(
             element => {
-                element.classList.add(
-                    "is-visible"
-                );
+                element.classList.add("is-visible");
             }
         );
 
@@ -55,17 +51,12 @@ function setupAboutAnimations() {
 
     const observer =
         new IntersectionObserver(
-            (
-                entries,
-                observerInstance
-            ) => {
+            (entries, observerInstance) => {
 
                 entries.forEach(
                     entry => {
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+                        if (entry.isIntersecting) {
 
                             entry.target.classList.add(
                                 "is-visible"
@@ -96,7 +87,6 @@ function setupAboutAnimations() {
 }
 
 
-
 /* =====================================================
    ABOUT CTA ACTIONS
 ===================================================== */
@@ -122,12 +112,12 @@ function setupAboutActions() {
                 () => {
 
                     /*
-                     * The destination page is the actual
-                     * destination for these actions.
+                     * These are normal HTML links.
+                     * No JavaScript navigation is required.
                      *
-                     * Keeping this as a normal anchor
-                     * means the buttons still work even
-                     * when JavaScript is unavailable.
+                     * The destination page must exist as:
+                     *
+                     * ./destinations.html
                      */
 
                 }
